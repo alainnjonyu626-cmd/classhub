@@ -1,7 +1,7 @@
 // Small reusable UI pieces built from the classes in main.css.
 // Pages combine these like LEGO bricks instead of repeating markup.
 
-import { L } from "../config/labels";
+import { L, getMode } from "../config/labels";
 import { atTime, countdown, countdownLabel } from "../lib/dates";
 import { el, type Child } from "../lib/dom";
 import type { AnnouncementCategory, Course, Deadline, DeadlineType } from "../types/sheet";
@@ -75,7 +75,10 @@ export const CATEGORY_CARD: Record<AnnouncementCategory, string> = {
 /** Words for deadline types, mode-aware ("CA test" / "Sequence test"). */
 export function deadlineTypeLabel(type: DeadlineType): string {
   const labels: Record<DeadlineType, string> = {
-    test: L("test"), assignment: "Assignment", exam: L("exam"), admin: "Admin", sequence: "Sequence test", mock: "Mock exam",
+    test: L("test"), assignment: "Assignment", exam: L("exam"), admin: "Admin",
+    // sequence and mock only exist in secondary mode; a university sheet using them gets the local words
+    sequence: getMode() === "secondary" ? "Sequence test" : L("test"),
+    mock: getMode() === "secondary" ? "Mock exam" : L("exam"),
   };
   return labels[type];
 }

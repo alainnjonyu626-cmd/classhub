@@ -38,7 +38,7 @@ mountPage({
     });
 
     // Refresh: forget the saved copy and download again
-    const refreshButton = toolRow("refresh", "Refresh data now", "Download the latest from the delegate");
+    const refreshButton = toolRow("refresh", "Refresh data now", `Download the latest from ${L("managerLower")}`);
     refreshButton.addEventListener("click", () => {
       clearCache(hubId);
       location.reload();
@@ -66,7 +66,7 @@ mountPage({
           ? el("a", { class: "row", href: waChat(reportTo, `Hello, I found a mistake on ${hub.name}: `), target: "_blank", rel: "noopener" },
               iconBox("news"), el("div", { class: "min-w-0 flex-1" },
                 el("p", { class: "row-title" }, "Report a mistake"),
-                el("p", { class: "row-meta" }, "Wrong date or venue? Tell the delegate")))
+                el("p", { class: "row-meta" }, `Wrong date or venue? Tell ${L("managerLower")}`)))
           : null,
         refreshButton,
       )),

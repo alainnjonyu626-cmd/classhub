@@ -16,6 +16,14 @@ export interface Labels {
   /** null = credits are hidden in this mode. */
   credits: string | null;
   classInfo: string;
+  /** Section title for the people on Class info. */
+  leaders: string;
+  /** Who runs the hub: default announcement author and the person to report mistakes to. */
+  manager: string;
+  /** Same, for the middle of a sentence: "Tell {the delegate}". */
+  managerLower: string;
+  /** Home tile subtitle for Class info. */
+  classInfoHint: string;
 }
 
 export const LABELS: Record<Mode, Labels> = {
@@ -30,6 +38,10 @@ export const LABELS: Record<Mode, Labels> = {
     parents: null,
     credits: "credits",
     classInfo: "Class info",
+    leaders: "Class leaders",
+    manager: "Delegate",
+    managerLower: "the delegate",
+    classInfoHint: "Delegates & contacts",
   },
   secondary: {
     courses: "Subjects",
@@ -42,6 +54,10 @@ export const LABELS: Record<Mode, Labels> = {
     parents: "Parents' corner",
     credits: null,
     classInfo: "Class info",
+    leaders: "Class teachers",
+    manager: "School office",
+    managerLower: "the school office",
+    classInfoHint: "Teachers & contacts",
   },
 };
 

@@ -1,6 +1,7 @@
 // Handouts & notes: find any note quickly.
 // Spec: README section 16.10. Mockup: design/mockups/handouts.html
 
+import { L } from "../config/labels";
 import { mountPage } from "../app";
 import { emptyState } from "../components/states";
 import { icon } from "../components/icons";
@@ -19,7 +20,7 @@ mountPage({
   back: "more",
   tabs: ["handouts", "courses"],
   render: ({ data }) => {
-    if (!data.handouts.length) return el("div", { class: "mt-5" }, emptyState("No handouts yet. The delegate will add them here."));
+    if (!data.handouts.length) return el("div", { class: "mt-5" }, emptyState(`No handouts yet. ${L("manager")} will add them here.`));
 
     const courses = courseMap(data.courses);
     const codes = [...new Set(data.handouts.map((h) => h.code))].sort();

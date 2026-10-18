@@ -85,7 +85,7 @@ function pinnedCard(a: Announcement): HTMLElement {
     el("span", {}, categoryTag(a.category)),
     el("h2", { class: "text-base leading-snug font-semibold" }, a.title),
     el("p", { class: "truncate text-[13px] text-muted" }, preview(a.body)),
-    el("p", { class: "text-xs text-muted" }, `${a.author ?? "Delegate"} · ${when(a)}`),
+    el("p", { class: "text-xs text-muted" }, `${a.author ?? L("manager")} · ${when(a)}`),
   );
 }
 

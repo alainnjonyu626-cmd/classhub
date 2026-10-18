@@ -1,6 +1,7 @@
 // One announcement: the full message, easy to share.
 // Spec: README section 16.5. Mockup: design/mockups/announcement.html
 
+import { L } from "../config/labels";
 import { mountPage } from "../app";
 import { fullMessage } from "../components/states";
 import { avatar, categoryTag, courseMap, iconBox, list, row } from "../components/ui";
@@ -17,7 +18,7 @@ mountPage({
     const id = Number(param("id"));
     const a = data.announcements.find((x) => x.id === id);
     if (!a) {
-      return fullMessage("We couldn't find that announcement", "It may have been removed by the delegate.", {
+      return fullMessage("We couldn't find that announcement", `It may have been removed by ${L("managerLower")}.`, {
         label: "See all announcements", href: hubLink("announcements"),
       });
     }
@@ -25,7 +26,7 @@ mountPage({
 
     const course = a.code ? courseMap(data.courses).get(a.code) : undefined;
     const details: [string, string][] = [];
-    if (a.code) details.push(["Course", course ? `${prettyCode(a.code)} · ${course.title}` : prettyCode(a.code)]);
+    if (a.code) details.push([L("course"), course ? `${prettyCode(a.code)} · ${course.title}` : prettyCode(a.code)]);
     if (a.when) details.push(["When", a.when]);
     if (a.where) details.push(["Where", a.where]);
 
@@ -38,9 +39,9 @@ mountPage({
       el("h2", { class: "mt-2.5 mb-2 text-[22px] leading-tight font-bold" }, a.title),
 
       el("div", { class: "flex items-center gap-3 py-3" },
-        avatar(a.author ?? "Delegate"),
+        avatar(a.author ?? L("manager")),
         el("div", {},
-          el("p", { class: "font-medium" }, a.author ?? "Delegate"),
+          el("p", { class: "font-medium" }, a.author ?? L("manager")),
           el("p", { class: "text-[13px] text-muted" },
             `${formatDate(a.date)}${a.time !== null ? `, ${formatTime(a.time)}` : ""}`),
         ),

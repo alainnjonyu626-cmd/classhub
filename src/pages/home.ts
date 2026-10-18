@@ -42,7 +42,7 @@ function pinnedCard(data: HubData): HTMLElement | null {
     el("a", { href: hubLink("announcement", { id: String(pinned.id) }), class: `card ${CATEGORY_CARD[pinned.category]} flex flex-col gap-2` },
       el("span", {}, categoryTag(pinned.category, "Pinned · ")),
       el("h2", { class: "text-[17px] leading-snug font-semibold" }, pinned.title),
-      el("p", { class: "text-[13px] text-muted" }, `${pinned.author ?? "Delegate"} · ${relativeTime(posted)}`),
+      el("p", { class: "text-[13px] text-muted" }, `${pinned.author ?? L("manager")} · ${relativeTime(posted)}`),
     ),
   );
 }
@@ -119,7 +119,7 @@ function quickLinks(data: HubData): HTMLElement {
       tile(L("courses"), `${data.courses.length} this ${hubLabelPeriod()}`, hubLink("courses")),
       parents
         ? tile(parents, "Dates, fees, meetings", hubLink("parents"))
-        : tile(L("classInfo"), "Delegates & contacts", hubLink("class-info")),
+        : tile(L("classInfo"), L("classInfoHint"), hubLink("class-info")),
     ),
   );
 }

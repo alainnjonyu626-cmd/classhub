@@ -1,6 +1,7 @@
 // Help: how to add the hub to the home screen like an app.
 // Spec: README section 16.15.
 
+import { L } from "../config/labels";
 import { mountPage } from "../app";
 import { el, mount } from "../lib/dom";
 
@@ -74,7 +75,7 @@ mountPage({
       panel,
       el("div", { class: "list mt-6" },
         faq("Does it use a lot of data?", "No. Pages are very small, and files (PDFs) only download when you tap Open."),
-        faq("Will it update by itself?", "Yes. Every time you open it with data, it gets the latest info from your delegate."),
+        faq("Will it update by itself?", `Yes. Every time you open it with data, it gets the latest info from ${L("managerLower")}.`),
         faq("Do I need to download anything?", "No. Adding to the home screen just creates a shortcut. Nothing is installed from an app store."),
       ),
     ];

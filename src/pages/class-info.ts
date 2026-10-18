@@ -4,6 +4,7 @@
 import { mountPage } from "../app";
 import { emptyState } from "../components/states";
 import { avatar, dueBadge, iconBox, initials, list, row, section, sectionTitle } from "../components/ui";
+import { L } from "../config/labels";
 import { atTime, parseDate, today } from "../lib/dates";
 import { el } from "../lib/dom";
 import { isSafeUrl, waChat } from "../lib/links";
@@ -31,7 +32,7 @@ mountPage({
 
       // Leaders (WhatsApp button only when the sheet has their number)
       data.leaders.length
-        ? section(sectionTitle("Class leaders"), list(data.leaders.map((l, i) => row({
+        ? section(sectionTitle(L("leaders")), list(data.leaders.map((l, i) => row({
             lead: avatar(l.name, tones[i % tones.length]),
             title: l.name,
             meta: l.role,
