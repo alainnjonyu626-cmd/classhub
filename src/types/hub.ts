@@ -8,6 +8,8 @@ export interface HubConfig {
   /** Level / programme / form, e.g. "Computer Science · Level 200". */
   subtitle: string;
   school: string;
+  /** Sort position on the school page (smaller first). Without it, classes sort naturally by subtitle. */
+  order?: number;
   /** Groups the hub under school.html?school=<id>. */
   schoolId?: string;
   mode: Mode;

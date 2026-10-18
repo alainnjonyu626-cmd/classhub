@@ -63,6 +63,8 @@ export function mountPage(options: PageOptions): void {
   // Pages opened without ?hub= (e.g. from the installed app icon) get it added back
   if (!param("hub")) history.replaceState(null, "", hubLink(options.page, {}, hubId));
   prefs.set("lastHub", hubId);
+  // School directory: "Continue to my class" next time
+  if (hub.schoolId) prefs.set(`schoolHub:${hub.schoolId}`, hubId);
 
   // 2. Mode + branding
   setMode(hub.mode);

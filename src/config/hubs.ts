@@ -25,18 +25,61 @@ export const HUBS: Record<string, HubConfig> = {
   },
   // Secondary-school version of the demo (shows Parents' corner, Subjects, Teacher...)
   "demo-school": {
-    name: "Demo College",
+    name: "Form 5 Hub",
     subtitle: "Form 5 Science",
     school: "Demo College",
+    schoolId: "demo-college",
     mode: "secondary",
     sheetId: "demo",
     active: true,
-    plan: "semester",
+    plan: "year",
+  },
+  "demo-school-f1": {
+    name: "Form 1 Hub",
+    subtitle: "Form 1 A",
+    school: "Demo College",
+    schoolId: "demo-college",
+    mode: "secondary",
+    sheetId: "demo",
+    active: true,
+    plan: "year",
+  },
+  "demo-school-f10": {
+    name: "Form 10 Hub",
+    subtitle: "Form 10 Arts",
+    school: "Demo College",
+    schoolId: "demo-college",
+    mode: "secondary",
+    sheetId: "demo",
+    active: true,
+    plan: "year",
+  },
+  "demo-school-ls": {
+    name: "Lower Sixth Hub",
+    subtitle: "Lower Sixth Science",
+    school: "Demo College",
+    schoolId: "demo-college",
+    mode: "secondary",
+    sheetId: "demo",
+    active: true,
+    plan: "year",
+  },
+  // Inactive on purpose: must NOT appear on the school page
+  "demo-school-us": {
+    name: "Upper Sixth Hub",
+    subtitle: "Upper Sixth Arts",
+    school: "Demo College",
+    schoolId: "demo-college",
+    mode: "secondary",
+    sheetId: "demo",
+    active: false,
+    plan: "year",
   },
 };
 
 export const SCHOOLS: Record<string, SchoolConfig> = {
-  // "nhs": { name: "[SCHOOL NAME]", logo: "logos/nhs.png", color: "#7A1F2B" },
+  // "nhs": { name: "[SCHOOL NAME]", logo: "logos/nhs.png", color: "#7A1F2B", parentsHub: "nhs-parents" },
+  "demo-college": { name: "Demo College", color: "#7A1F2B", parentsHub: "demo-school" },
 };
 
 /** Hub ids: lowercase letters, numbers and dashes only. */

@@ -1207,7 +1207,7 @@ Run through this before showing any client.
 
 - [ ] **3.1** Secondary mode in `src/config/labels.ts` (already has both modes); mode-aware deadline types and nav.
 - [x] **3.2** `parents` tab cleaning + Parents' corner page.
-- [ ] **3.3** `SCHOOLS` register + School directory page with search and "remember my class".
+- [x] **3.3** `SCHOOLS` register + School directory page with search and "remember my class".
 - [ ] **3.4** Client branding: colour override with contrast check, logos.
 - [ ] **3.5** Paused page + `active` switch.
 
