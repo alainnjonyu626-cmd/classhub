@@ -46,7 +46,7 @@ Usually within a few minutes. A student can open **More** and tap **Refresh data
 
 - Open **More** in the hub. The note at the bottom says if any rows were skipped. A skipped row is usually a missing title, a date in the wrong format, or a time that is not `HH:MM`.
 - Fix that row in the sheet and refresh.
-- Still stuck? Message **[YOUR NAME]** on WhatsApp: **[YOUR NUMBER]**.
+- Still stuck? Message **BUDI ALAIN** on WhatsApp: **650 981 929**.
 
 ## Please do not
 

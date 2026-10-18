@@ -4,8 +4,8 @@
 import type { HubConfig, OwnerConfig, SchoolConfig } from "../types/hub";
 
 export const OWNER: OwnerConfig = {
-  name: "[YOUR NAME]",
-  whatsapp: "2376XXXXXXXX", // digits only, no "+" or spaces
+  name: "BUDI ALAIN",
+  whatsapp: "237650981929", // digits only, no "+" or spaces
   city: "Douala",
 };
 
