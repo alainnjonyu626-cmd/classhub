@@ -3,6 +3,7 @@
 import { L } from "../config/labels";
 import { el } from "../lib/dom";
 import { hubLink, type PageId } from "../lib/links";
+import { brandLogo } from "./branding";
 import { icon, type IconName } from "./icons";
 
 /** Sticky top bar with an optional back arrow. */
@@ -16,6 +17,7 @@ export function topBar(title: string, back?: PageId, backQuery: Record<string, s
       back
         ? el("a", { href: hubLink(back, backQuery), class: "-ml-2 grid size-10 place-items-center rounded-full hover:bg-line", "aria-label": "Go back" }, icon("back"))
         : null,
+      brandLogo() ? el("img", { src: brandLogo(), alt: "", width: 28, height: 28, class: "size-7 rounded-lg object-contain" }) : null,
       el("h1", { class: "text-lg font-semibold" }, title),
     ),
   );

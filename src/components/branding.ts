@@ -1,6 +1,15 @@
 // Applies a client's colour and name to the page. README sections 7 & 13.
 
+import { SCHOOLS } from "../config/hubs";
+import { BASE } from "../lib/links";
 import type { HubConfig } from "../types/hub";
+
+let logoUrl: string | null = null;
+
+/** URL of the client logo (hub first, then its school), or null. Used by the top bar. */
+export function brandLogo(): string | null {
+  return logoUrl;
+}
 
 /** WCAG contrast of white text on a hex colour. Client colours need >= 4.5. */
 export function contrastWithWhite(hex: string): number {
@@ -27,12 +36,18 @@ function setThemeColor(color: string): void {
 }
 
 export function applyBranding(hub: HubConfig, pageTitle?: string): void {
-  setThemeColor(hub.color && contrastWithWhite(hub.color) >= 4.5 ? hub.color : "#2b59d9");
-  if (hub.color && contrastWithWhite(hub.color) >= 4.5) {
-    document.documentElement.style.setProperty("--color-accent", hub.color);
-    setThemeColor(hub.color);
-  } else if (hub.color) {
-    console.warn(`ClassHub: colour ${hub.color} is too light for white text; using the default accent.`);
+  // A hub's own colour/logo wins; otherwise it inherits its school's.
+  const school = hub.schoolId ? SCHOOLS[hub.schoolId] : undefined;
+  const color = hub.color ?? school?.color;
+  const logo = hub.logo ?? school?.logo;
+  logoUrl = logo ? BASE + logo : null;
+
+  if (color && contrastWithWhite(color) >= 4.5) {
+    document.documentElement.style.setProperty("--color-accent", color);
+    setThemeColor(color);
+  } else {
+    setThemeColor("#2b59d9");
+    if (color) console.warn(`ClassHub: colour ${color} is too light for white text; using the default accent.`);
   }
   document.title = pageTitle ? `${pageTitle} · ${hub.name}` : hub.name;
 }
