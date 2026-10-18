@@ -41,7 +41,7 @@ function serviceWorker(base: string): Plugin {
       const path = resolve(dist, "sw.js");
       const source = readFileSync(path, "utf8")
         .replace('const VERSION = "dev";', `const VERSION = "${Date.now().toString(36)}";`)
-        .replace("const PRECACHE = [];", `const PRECACHE = ${JSON.stringify(files.map((f) => base + f))};`);
+        .replace("const PRECACHE = [];", `const PRECACHE = ${JSON.stringify([base, ...files.map((f) => base + f)])};`);
       writeFileSync(path, source);
     },
   };

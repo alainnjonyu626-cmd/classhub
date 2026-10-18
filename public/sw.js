@@ -34,10 +34,11 @@ self.addEventListener("fetch", (event) => {
   if (url.hostname.endsWith("google.com") || url.hostname.endsWith("googleusercontent.com")) return;
 
   // Our own files (pages, JS, CSS, icons): cache first. ?hub=... is ignored when matching,
-  // so one cached page serves every hub.
+  // so one cached page serves every hub. ignoreVary: some hosts add "Vary: Origin", which would make
+  // module scripts miss the cache and break the page offline.
   if (url.origin === self.location.origin) {
     event.respondWith(
-      caches.match(request, { ignoreSearch: true }).then((hit) => hit ?? fetch(request).catch(() => offlineFallback(request))),
+      caches.match(request, { ignoreSearch: true, ignoreVary: true }).then((hit) => hit ?? fetch(request).catch(() => offlineFallback(request))),
     );
     return;
   }

@@ -104,6 +104,6 @@ function sheetHealth(savedAt: string, skipped: Partial<Record<TabName, number>>,
       problems.length
         ? problems.map((p) => el("p", { class: "text-urgent" }, p))
         : el("p", {}, "Every row in the sheet was read correctly."),
-      el("p", { class: "mt-1" }, "Rows with a missing title, date or wrong format are skipped. The delegate can fix them in the sheet.")),
+      el("p", { class: "mt-1" }, `Rows with a missing title, date or wrong format are skipped. ${L("manager")} can fix them in the sheet.`)),
   );
 }
