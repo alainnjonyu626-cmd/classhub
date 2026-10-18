@@ -7,6 +7,8 @@ import type { RawRow, TabName } from "../types/sheet";
 export interface CachedHub {
   savedAt: string;
   tabs: Partial<Record<TabName, RawRow[]>>;
+  /** Tabs the sheet couldn't give us last time (renamed, private). They count as "loaded, empty" offline. */
+  broken?: TabName[];
 }
 
 const key = (hubId: string) => `classhub:${hubId}`;
@@ -23,11 +25,14 @@ export function readCache(hubId: string): CachedHub | null {
 }
 
 /** Merge fresh tabs into the saved copy (tabs this page didn't load are kept). */
-export function writeCache(hubId: string, tabs: Partial<Record<TabName, RawRow[]>>): string {
+export function writeCache(hubId: string, tabs: Partial<Record<TabName, RawRow[]>>, broken: TabName[] = []): string {
   const savedAt = new Date().toISOString();
   try {
     const previous = readCache(hubId);
-    const next: CachedHub = { savedAt, tabs: { ...(previous?.tabs ?? {}), ...tabs } };
+    const mergedTabs = { ...(previous?.tabs ?? {}), ...tabs };
+    // Broken tabs from earlier visits stay broken unless this load fixed them
+    const carried = (previous?.broken ?? []).filter((t) => !(t in tabs) && !broken.includes(t));
+    const next: CachedHub = { savedAt, tabs: mergedTabs, broken: [...carried, ...broken] };
     localStorage.setItem(key(hubId), JSON.stringify(next));
   } catch {
     // Storage full or blocked: the page still works, just without offline copy.

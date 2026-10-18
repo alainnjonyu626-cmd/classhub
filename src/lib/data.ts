@@ -68,7 +68,8 @@ export async function loadHub(
   // 1. Saved copy first, so the page appears instantly
   const cached = readCache(hubId);
   // The saved copy only counts if it has EVERY tab this page needs
-  const cacheCovers = cached !== null && tabs.every((t) => cached.tabs[t]);
+  // (a tab the sheet couldn't give us last time counts too: it shows empty, not "connect once")
+  const cacheCovers = cached !== null && tabs.every((t) => cached.tabs[t] || cached.broken?.includes(t));
   if (cached && cacheCovers) {
     onUpdate(buildData(cached.tabs, cached.savedAt, true), "cached");
   }
@@ -109,7 +110,7 @@ export async function loadHub(
   }
 
   // 4. Save and show fresh data (broken tabs fall back to their saved copy if any)
-  const savedAt = writeCache(hubId, fresh);
+  const savedAt = writeCache(hubId, fresh, broken);
   const merged = { ...(cached?.tabs ?? {}), ...fresh };
   const data = buildData(merged, savedAt, false);
   data.broken = broken;
