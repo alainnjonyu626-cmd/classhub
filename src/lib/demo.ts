@@ -41,6 +41,7 @@ const TABS: Record<TabName, RawRow[]> = {
       body: "The lecturer moved our CSC 201 continuous assessment because of the faculty meeting.\n\nIt covers chapters 1 to 4: arrays, linked lists, stacks and queues. Bring your student card. Nobody will be allowed in after 10:15.\n\nIf you have a clash with another course, message me before tomorrow evening.",
       when: "In 3 days, 10:00", where: "Amphi 250", attachment: DRIVE, attachment_name: "CSC 201 · CA revision sheet", expires: day(3),
     },
+    { id: "7", date: day(-1), time: "08:00", category: "parents", pinned: "no", author: "School office", title: "Report cards will be handed out at the PTA meeting", body: "Please come with your child's school fees receipt.", code: "", when: "", where: "", attachment: "", attachment_name: "", expires: "" },
     { id: "5", date: day(-1), time: "18:10", category: "exam", pinned: "no", author: "Delegate", title: "First semester exam timetable is out", body: "Exams start in six weeks. Check your venues on the faculty notice board.", code: "", when: "", where: "", attachment: "", attachment_name: "", expires: "" },
     { id: "4", date: day(-2), time: "12:00", category: "general", pinned: "no", author: "Delegate", title: "CSC 203 lab moved from Lab 1 to Lab 2", body: "From this week, all Monday labs hold in Lab 2.", code: "CSC203", when: "", where: "Lab 2", attachment: "", attachment_name: "", expires: "" },
     { id: "3", date: day(-3), time: "09:30", category: "urgent", pinned: "no", author: "Delegate", title: "Submit project group names by Friday", body: "Groups of 4. Send names to the delegate.", code: "", when: "", where: "", attachment: "", attachment_name: "", expires: "" },
@@ -104,7 +105,17 @@ const TABS: Record<TabName, RawRow[]> = {
     { name: "Lab 2", directions: "Computer centre, 1st floor", map_link: "" },
     { name: "Hall B", directions: "Behind the library", map_link: "" },
   ],
-  parents: [],
+  parents: [
+    { section: "dates", title: "Second term resumes", detail: "Students must be in uniform", date: day(6), link: "" },
+    { section: "dates", title: "Mid-term break", detail: "", date: day(27), link: "" },
+    { section: "dates", title: "Inter-house sports day", detail: "Parents are welcome", date: day(-4), link: "" },
+    { section: "fees", title: "Second instalment", detail: "Pay at the bursar's office or by Mobile Money. Keep your receipt.", date: day(10), link: "" },
+    { section: "fees", title: "Fee schedule 2026/2027", detail: "", date: "", link: DRIVE },
+    { section: "meetings", title: "PTA general meeting", detail: "Saturday 10:00, school hall", date: day(13), link: "" },
+    { section: "requirements", title: "Uniform", detail: "Navy skirt or trousers, white shirt, school tie", date: "", link: "" },
+    { section: "requirements", title: "Textbooks", detail: "Full list is in the Fee schedule file", date: "", link: "" },
+    { section: "contacts", title: "School office", detail: "Mon to Fri, 7:30 to 15:30", date: "", link: "https://wa.me/237600000000" },
+  ],
 };
 
 export function demoRows(tab: TabName): { headers: string[]; rows: RawRow[] } {

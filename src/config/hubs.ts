@@ -23,6 +23,16 @@ export const HUBS: Record<string, HubConfig> = {
     active: true,
     plan: "semester",
   },
+  // Secondary-school version of the demo (shows Parents' corner, Subjects, Teacher...)
+  "demo-school": {
+    name: "Demo College",
+    subtitle: "Form 5 Science",
+    school: "Demo College",
+    mode: "secondary",
+    sheetId: "demo",
+    active: true,
+    plan: "semester",
+  },
 };
 
 export const SCHOOLS: Record<string, SchoolConfig> = {
