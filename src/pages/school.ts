@@ -9,7 +9,10 @@ import { HUBS, SCHOOLS } from "../config/hubs";
 import { prefs } from "../lib/cache";
 import { $, el, mount } from "../lib/dom";
 import { BASE, hubLink, param, siteLink } from "../lib/links";
+import { registerServiceWorker } from "../lib/pwa";
 import type { HubConfig } from "../types/hub";
+
+registerServiceWorker();
 
 const schoolId = param("school");
 const school = schoolId ? SCHOOLS[schoolId] : undefined;

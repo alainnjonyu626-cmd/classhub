@@ -12,6 +12,7 @@
 //     render: ({ data }) => [ ...elements built from data.timetable ... ],
 //   });
 
+import { registerServiceWorker } from "./lib/pwa";
 import "./styles/main.css";
 import { HUBS, HUB_ID_PATTERN } from "./config/hubs";
 import { setMode } from "./config/labels";
@@ -49,6 +50,7 @@ export interface PageOptions {
 const STALE_AFTER_DAYS = 7;
 
 export function mountPage(options: PageOptions): void {
+  registerServiceWorker();
   // 1. Which hub? Bad or missing → 404. Inactive → Paused.
   const hubId = param("hub") ?? prefs.get("lastHub");
   const hub = hubId && HUB_ID_PATTERN.test(hubId) ? HUBS[hubId] : undefined;

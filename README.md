@@ -1135,7 +1135,7 @@ A 1-page guide in `docs/delegate-guide.md` (also sent as a PDF or image on Whats
 5. The site appears at `https://[username].github.io/classhub/`.
 6. **Paths:** in HTML shells use root paths (`/src/pages/home.ts`); in TypeScript build links with `hubLink()` / `siteLink()`. Vite adds the base path (`/classhub/`) for you.
 7. **Custom domain (later):** buy a domain, add it under Settings › Pages, add a `CNAME` file.
-8. **Every deploy:** bump `VERSION` in `public/sw.js` (once the service worker exists), then test one hub on a real phone.
+8. **Every deploy:** the build stamps a new `VERSION` into `sw.js` automatically; then test one hub on a real phone.
 
 ---
 
@@ -1213,8 +1213,8 @@ Run through this before showing any client.
 
 ### Phase 4: polish and launch
 
-- [ ] **4.1** `manifest.json`, icons, Help page, install card.
-- [ ] **4.2** `sw.js` offline app shell with versioning.
+- [x] **4.1** `manifest.json`, icons, Help page, install card.
+- [x] **4.2** `sw.js` offline app shell with versioning.
 - [x] **4.3** Landing page with FAQ and demo hub.
 - [ ] **4.4** Delegate guide (`docs/delegate-guide.md` + shareable image).
 - [ ] **4.5** Full testing checklist (section 24) on two real phones.

@@ -3,6 +3,9 @@
 // This file only fills in what comes from src/config/hubs.ts: WhatsApp links and your name.
 import { OWNER } from "../config/hubs";
 import { hubLink, waChat } from "../lib/links";
+import { registerServiceWorker } from "../lib/pwa";
+
+registerServiceWorker();
 
 document.querySelectorAll<HTMLAnchorElement>("a[data-wa]").forEach((a) => {
   a.href = waChat(OWNER.whatsapp, a.dataset.wa ?? "");

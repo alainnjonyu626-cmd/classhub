@@ -1,0 +1,15 @@
+{
+  "name": "ClassHub",
+  "short_name": "ClassHub",
+  "description": "Announcements, timetable, deadlines and handouts for your class.",
+  "start_url": "./app/home.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#F6F5F1",
+  "theme_color": "#2B59D9",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
