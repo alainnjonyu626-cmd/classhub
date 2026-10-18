@@ -1,21 +1,21 @@
-// Landing page (your selling page). README section 16.1. Mockup: design/mockups/landing.html
-import "../styles/main.css";
+// Landing page (your selling page). README section 16.1.
+// The page itself is plain HTML in /index.html so it works with JavaScript off.
+// This file only fills in what comes from src/config/hubs.ts: WhatsApp links and your name.
 import { OWNER } from "../config/hubs";
-import { $, el, mount } from "../lib/dom";
 import { hubLink, waChat } from "../lib/links";
 
-// TODO: build the full landing page (hero, problem, features, how it works, price, FAQ).
-mount(
-  $("#app"),
-  el(
-    "main",
-    { class: "wrap py-16" },
-    el("p", { class: "tag" }, "For class delegates & schools"),
-    el("h1", { class: "mt-3 text-[34px] leading-tight font-bold tracking-tight" }, "Your class. One link. Nothing gets buried."),
-    el("p", { class: "mt-4 text-muted" }, "Announcements, timetable, deadlines, handouts and past questions in one place."),
-    el("div", { class: "mt-6 flex flex-col gap-2.5" },
-      el("a", { class: "btn", href: hubLink("home", {}, "demo") }, "See a live example"),
-      el("a", { class: "btn btn-wa", href: waChat(OWNER.whatsapp, "Hello, I'd like a ClassHub for my class") }, "Chat with us"),
-    ),
-  ),
-);
+document.querySelectorAll<HTMLAnchorElement>("a[data-wa]").forEach((a) => {
+  a.href = waChat(OWNER.whatsapp, a.dataset.wa ?? "");
+  a.target = "_blank";
+  a.rel = "noopener";
+});
+
+// Respect the deploy base path (GitHub Pages serves from /<repo>/)
+document.querySelectorAll<HTMLAnchorElement>("a[data-demo]").forEach((a) => {
+  a.href = hubLink("home", {}, "demo");
+});
+
+const setText = (selector: string, text: string) =>
+  document.querySelectorAll(selector).forEach((node) => { node.textContent = text; });
+setText("[data-owner-name]", OWNER.name);
+setText("[data-owner-city]", OWNER.city);
