@@ -1,0 +1,89 @@
+/*
+  ClassHub styles: Tailwind + our design tokens.
+
+  @theme turns each token into a Tailwind class:
+    --color-ink      → text-ink, bg-ink, border-ink
+    --color-accent   → bg-accent, text-accent ...
+  Think of @theme as the paint shop: we mix the colours once here,
+  then every page just asks for "bg-accent" by name.
+
+  Client colours: src/components/branding.ts overrides --color-accent at runtime.
+*/
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --color-bg: #f6f5f1;
+  --color-surface: #ffffff;
+  --color-ink: #15171c;
+  --color-muted: #5d6270;
+  --color-line: #e6e3dc;
+
+  --color-accent: #2b59d9;
+  --color-accent-ink: #1e43ae;
+  --color-accent-soft: #e9eefc;
+
+  --color-urgent: #b4410f;
+  --color-urgent-soft: #fbede4;
+  --color-exam: #6b3fb8;
+  --color-exam-soft: #f0eafb;
+  --color-ok: #157043;
+  --color-ok-soft: #e2f2e9;
+  --color-wa: #1c9e4d;
+
+  --radius-card: 14px;
+  --radius-box: 12px;
+}
+
+/*
+  Shared building blocks used by the TypeScript components.
+  Written once with @apply so every page looks identical
+  (same as the mockups in design/mockups).
+*/
+@layer components {
+  .wrap { @apply mx-auto w-full max-w-[560px] px-4; }
+
+  .card { @apply rounded-card border border-line bg-surface p-4; }
+  .card-accent { @apply border-accent bg-accent text-white; }
+  .card-urgent { @apply border-[#f1d2c0] bg-urgent-soft; }
+
+  .list { @apply overflow-hidden rounded-card border border-line bg-surface; }
+  .row { @apply flex min-h-16 items-center gap-3 border-t border-line px-4 py-3.5 first:border-t-0; }
+  .row-title { @apply font-medium leading-snug; }
+  .row-meta { @apply text-[13px] text-muted; }
+
+  .icon-box { @apply grid size-[42px] shrink-0 place-items-center rounded-box bg-accent-soft text-accent-ink; }
+
+  .tag { @apply inline-flex items-center gap-1.5 rounded-full bg-accent-soft px-2.5 py-0.5 text-xs font-semibold text-accent-ink; }
+  .tag-urgent { @apply bg-urgent-soft text-urgent; }
+  .tag-exam { @apply bg-exam-soft text-exam; }
+  .tag-ok { @apply bg-ok-soft text-ok; }
+  .tag-plain { @apply bg-bg text-muted; }
+
+  .btn { @apply inline-flex min-h-[46px] cursor-pointer items-center justify-center gap-2 rounded-full border-0 bg-ink px-5 font-semibold text-white; }
+  .btn-light { @apply border border-line bg-surface text-ink; }
+  .btn-wa { @apply bg-wa text-white; }
+  .btn-accent { @apply bg-accent text-white; }
+  .btn-sm { @apply min-h-9 px-3.5 text-[13px]; }
+
+  .chip { @apply inline-flex min-h-10 shrink-0 items-center rounded-full border border-line bg-surface px-4 text-sm font-medium; }
+  .chip[aria-pressed="true"] { @apply border-ink bg-ink text-white; }
+
+  .sec-title { @apply mb-2.5 flex items-baseline justify-between; }
+  .sec-title h2 { @apply text-base font-semibold; }
+  .sec-title a { @apply text-[13px] font-medium text-accent-ink; }
+
+  .group-label { @apply mb-2 text-xs font-semibold tracking-[0.06em] text-muted uppercase; }
+
+  .skeleton { @apply animate-pulse rounded-card bg-line/70; }
+}
+
+@layer base {
+  body { @apply bg-bg font-sans text-[15px] leading-normal text-ink antialiased; }
+  :focus-visible { @apply outline-2 outline-offset-2 outline-accent; }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+}

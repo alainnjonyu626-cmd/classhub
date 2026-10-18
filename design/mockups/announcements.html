@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Announcements · CS200 Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="nav.js" defer></script>
+</head>
+<body data-page="announcements" data-title="Announcements">
+  <main class="wrap">
+
+    <div class="section" style="margin-top:16px">
+      <div class="chips" role="group" aria-label="Filter announcements">
+        <button class="chip active">All</button>
+        <button class="chip">Urgent</button>
+        <button class="chip">Tests &amp; exams</button>
+        <button class="chip">General</button>
+      </div>
+    </div>
+
+    <!-- Pinned stays on top until the delegate removes it -->
+    <section class="section" style="margin-top:16px">
+      <p class="tiny muted" style="margin-bottom:8px;font-weight:600;letter-spacing:.06em">PINNED</p>
+      <a href="announcement.html" class="card card-urgent stack" style="gap:6px">
+        <span><span class="tag tag-urgent">Urgent</span></span>
+        <h2 style="font-size:16px;font-weight:600;line-height:1.35">CSC 201 CA moved to Thursday, 10am, Amphi 250</h2>
+        <p class="small muted">Bring your student card. No entry after 10:15.</p>
+        <p class="tiny muted">Delegate · 2 hours ago</p>
+      </a>
+    </section>
+
+    <section class="section">
+      <p class="tiny muted" style="margin-bottom:8px;font-weight:600;letter-spacing:.06em">THIS WEEK</p>
+      <div class="list">
+        <a class="row" href="announcement.html" style="align-items:flex-start">
+          <div class="grow stack" style="gap:4px">
+            <span><span class="tag tag-exam">Exam</span></span>
+            <p class="title">First semester exam timetable is out</p>
+            <p class="meta">Exams start 30 Nov. Check your venues. · Yesterday</p>
+          </div>
+        </a>
+        <a class="row" href="announcement.html" style="align-items:flex-start">
+          <div class="grow stack" style="gap:4px">
+            <span><span class="tag">General</span></span>
+            <p class="title">CSC 203 lab moved from Lab 1 to Lab 2</p>
+            <p class="meta">From this week, all Monday labs hold in Lab 2. · Sat</p>
+          </div>
+        </a>
+        <a class="row" href="announcement.html" style="align-items:flex-start">
+          <div class="grow stack" style="gap:4px">
+            <span><span class="tag tag-urgent">Urgent</span></span>
+            <p class="title">Submit project group names by Friday</p>
+            <p class="meta">Groups of 4. Send names to the delegate. · Fri</p>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="section">
+      <p class="tiny muted" style="margin-bottom:8px;font-weight:600;letter-spacing:.06em">EARLIER</p>
+      <div class="list">
+        <a class="row" href="announcement.html" style="align-items:flex-start">
+          <div class="grow stack" style="gap:4px">
+            <span><span class="tag">General</span></span>
+            <p class="title">Handouts for MAT 201 now available</p>
+            <p class="meta">Download from the Handouts page. · 9 Oct</p>
+          </div>
+        </a>
+        <a class="row" href="announcement.html" style="align-items:flex-start">
+          <div class="grow stack" style="gap:4px">
+            <span><span class="tag tag-plain">Social</span></span>
+            <p class="title">Class meeting after STA 201, Friday</p>
+            <p class="meta">We're planning the end-of-semester party. · 7 Oct</p>
+          </div>
+        </a>
+      </div>
+    </section>
+
+  </main>
+</body>
+</html>

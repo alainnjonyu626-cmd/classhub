@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Home · CS200 Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="nav.js" defer></script>
+</head>
+<body data-page="home">
+  <main class="wrap">
+
+    <header class="home-head">
+      <p class="kicker">Computer Science · Level 200</p>
+      <h1>CS200 Hub</h1>
+      <p class="muted small">Monday, 19 October</p>
+    </header>
+
+    <!-- Pinned, urgent: the one thing nobody should miss -->
+    <section class="section" aria-label="Pinned announcement">
+      <a href="announcement.html" class="card card-urgent stack" style="gap:8px">
+        <span><span class="tag tag-urgent">Pinned · Urgent</span></span>
+        <h2 style="font-size:17px;font-weight:600;line-height:1.35">CSC 201 CA moved to Thursday, 10am, Amphi 250</h2>
+        <p class="small muted">Delegate · 2 hours ago</p>
+      </a>
+    </section>
+
+    <!-- Next deadline countdown -->
+    <section class="section" aria-label="Next deadline">
+      <a href="deadlines.html" class="card card-accent" style="display:block">
+        <p class="small muted">Next deadline</p>
+        <h2 style="font-size:18px;font-weight:600;margin-top:2px">CSC 203 Assignment 2</h2>
+        <p class="small muted">Build a responsive landing page · Wed 21 Oct, 11:59pm</p>
+        <div class="count" aria-label="2 days 5 hours 40 minutes left">
+          <div><b>2</b><span>days</span></div>
+          <div><b>05</b><span>hours</span></div>
+          <div><b>40</b><span>mins</span></div>
+        </div>
+      </a>
+    </section>
+
+    <!-- Today's classes -->
+    <section class="section">
+      <div class="sec-title"><h2>Today</h2><a href="timetable.html">Full timetable</a></div>
+      <div class="list">
+        <a class="row" href="course.html">
+          <div class="icon-box"><b class="tiny">8:00</b></div>
+          <div class="grow"><p class="title">Data Structures</p><p class="meta">CSC 201 · Amphi 250</p></div>
+          <span class="tag tag-ok">Now</span>
+        </a>
+        <a class="row" href="course.html">
+          <div class="icon-box"><b class="tiny">10:00</b></div>
+          <div class="grow"><p class="title">Web Development</p><p class="meta">CSC 203 · Lab 2</p></div>
+        </a>
+        <a class="row" href="course.html">
+          <div class="icon-box"><b class="tiny">14:00</b></div>
+          <div class="grow"><p class="title">Linear Algebra</p><p class="meta">MAT 201 · Hall B</p></div>
+        </a>
+      </div>
+    </section>
+
+    <!-- Quick links -->
+    <section class="section">
+      <div class="sec-title"><h2>Quick links</h2></div>
+      <div class="quick">
+        <a href="handouts.html"><b>Handouts</b><span>24 files</span></a>
+        <a href="past-questions.html"><b>Past questions</b><span>18 papers</span></a>
+        <a href="courses.html"><b>Courses</b><span>6 this semester</span></a>
+        <a href="class-info.html"><b>Class info</b><span>Delegates &amp; contacts</span></a>
+      </div>
+    </section>
+
+    <!-- Latest handouts -->
+    <section class="section">
+      <div class="sec-title"><h2>New handouts</h2><a href="handouts.html">See all</a></div>
+      <div class="list">
+        <a class="row" href="handouts.html">
+          <div class="icon-box pdf">PDF</div>
+          <div class="grow"><p class="title">CSC 203 · Chapter 4: CSS Grid</p><p class="meta">2.1 MB · Yesterday</p></div>
+        </a>
+        <a class="row" href="handouts.html">
+          <div class="icon-box pdf">PDF</div>
+          <div class="grow"><p class="title">MAT 201 · Tutorial sheet 3</p><p class="meta">640 KB · Fri</p></div>
+        </a>
+      </div>
+    </section>
+
+  </main>
+</body>
+</html>
