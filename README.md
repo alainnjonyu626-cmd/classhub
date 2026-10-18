@@ -1216,7 +1216,7 @@ Run through this before showing any client.
 - [x] **4.1** `manifest.json`, icons, Help page, install card.
 - [x] **4.2** `sw.js` offline app shell with versioning.
 - [x] **4.3** Landing page with FAQ and demo hub.
-- [ ] **4.4** Delegate guide (`docs/delegate-guide.md` + shareable image).
+- [x] **4.4** Delegate guide (`docs/delegate-guide.md` + shareable image).
 - [ ] **4.5** Full testing checklist (section 24) on two real phones.
 
 ---
