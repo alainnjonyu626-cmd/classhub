@@ -8,7 +8,9 @@ import {
 } from "../components/ui";
 import { atTime, countdown, dayCode, formatDate, formatLongDate, formatTime, isoWeek, minutesNow, relativeDay, relativeTime, today } from "../lib/dates";
 import { el } from "../lib/dom";
+import { uses } from "../lib/data";
 import { hubLink, prettyCode } from "../lib/links";
+import type { HubConfig } from "../types/hub";
 import type { Course, Deadline, HubData, Slot } from "../types/sheet";
 
 mountPage({
@@ -27,7 +29,7 @@ mountPage({
       data.info.welcome ? el("p", { class: "card mt-4 text-sm text-muted" }, data.info.welcome) : null,
       nextDeadline(data.deadlines, courses),
       todaySection(data.timetable, courses),
-      quickLinks(data),
+      quickLinks(data, hub),
       newHandouts(data),
     ];
   },
@@ -105,7 +107,7 @@ function todaySection(timetable: Slot[], courses: Map<string, Course>): HTMLElem
 }
 
 // 5. Quick links with live counts
-function quickLinks(data: HubData): HTMLElement {
+function quickLinks(data: HubData, hub: HubConfig): HTMLElement {
   const tile = (title: string, sub: string, href: string) =>
     el("a", { href, class: "card flex min-h-[92px] flex-col justify-between p-3.5" },
       el("b", { class: "font-semibold" }, title), el("span", { class: "text-xs text-muted" }, sub));
@@ -114,10 +116,10 @@ function quickLinks(data: HubData): HTMLElement {
   return section(
     sectionTitle("Quick links"),
     el("div", { class: "grid grid-cols-2 gap-2.5" },
-      tile("Handouts", plural(data.handouts.length, "file"), hubLink("handouts")),
-      tile(L("pastQuestions"), plural(data.past_questions.length, "paper"), hubLink("past-questions")),
-      tile(L("courses"), `${data.courses.length} this ${hubLabelPeriod()}`, hubLink("courses")),
-      parents
+      uses(hub, "handouts") ? tile("Handouts", plural(data.handouts.length, "file"), hubLink("handouts")) : null,
+      uses(hub, "past_questions") ? tile(L("pastQuestions"), plural(data.past_questions.length, "paper"), hubLink("past-questions")) : null,
+      uses(hub, "courses") ? tile(L("courses"), `${data.courses.length} this ${hubLabelPeriod()}`, hubLink("courses")) : null,
+      parents && uses(hub, "parents")
         ? tile(parents, "Dates, fees, meetings", hubLink("parents"))
         : tile(L("classInfo"), L("classInfoHint"), hubLink("class-info")),
     ),

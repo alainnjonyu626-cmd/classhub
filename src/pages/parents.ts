@@ -6,6 +6,7 @@ import { mountPage } from "../app";
 import { L } from "../config/labels";
 import { emptyState } from "../components/states";
 import { CATEGORY_CARD, categoryTag, dueBadge, list, row, section, sectionTitle } from "../components/ui";
+import { uses } from "../lib/data";
 import { formatDate, relativeDay, today } from "../lib/dates";
 import { el } from "../lib/dom";
 import { hubLink, isSafeUrl } from "../lib/links";
@@ -24,9 +25,9 @@ mountPage({
   title: "Parents' corner",
   back: "more",
   tabs: ["parents", "announcements", "info"],
-  render: ({ hubId, data }) => {
+  render: ({ hubId, hub, data }) => {
     // University hubs have no Parents' corner: send direct visitors to Home
-    if (!L("parents")) {
+    if (!L("parents") || !uses(hub, "parents")) {
       location.replace(hubLink("home", {}, hubId));
       return [];
     }

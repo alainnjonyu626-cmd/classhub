@@ -1,6 +1,11 @@
 // Types for the client register (src/config/hubs.ts). README section 7.
 
+import type { TabName } from "./sheet";
+
 export type Mode = "university" | "secondary";
+
+/** Parts of a hub a school may choose not to use. The rest (info, news, timetable, deadlines) is always on. */
+export type OptionalTab = Extract<TabName, "courses" | "handouts" | "past_questions" | "leaders" | "places" | "parents">;
 
 export interface HubConfig {
   /** Shown in the header. Keep it short (~20 characters). */
@@ -22,6 +27,11 @@ export interface HubConfig {
   contact?: string;
   /** false = the hub shows the Paused page. Your on/off switch. */
   active: boolean;
+  /**
+   * Parts this school does not use, e.g. ["past_questions", "parents"]. They are not downloaded,
+   * disappear from Home and More, and the sheet does not need those tabs.
+   */
+  unused?: OptionalTab[];
   startDate?: string;
   plan?: "semester" | "term" | "year";
 }

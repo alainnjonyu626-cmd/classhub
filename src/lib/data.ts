@@ -4,7 +4,7 @@
 //
 // onUpdate can be called twice: once with the saved copy, once with fresh data.
 
-import type { HubConfig } from "../types/hub";
+import type { HubConfig, OptionalTab } from "../types/hub";
 import type { HubData, RawRow, TabName } from "../types/sheet";
 import { readCache, writeCache } from "./cache";
 import {
@@ -28,6 +28,11 @@ export type LoadStatus =
   | "fresh" //        fresh data from the sheet
   | "offline" //      network failed, showing the saved copy
   | "offline-empty"; // network failed and nothing saved yet
+
+/** Does this hub use this part? (true unless the school switched it off with `unused`.) */
+export function uses(hub: HubConfig, tab: OptionalTab): boolean {
+  return !hub.unused?.includes(tab);
+}
 
 export function emptyData(): HubData {
   return {
@@ -62,9 +67,11 @@ export function buildData(tabs: Partial<Record<TabName, RawRow[]>>, savedAt: str
 export async function loadHub(
   hubId: string,
   hub: HubConfig,
-  tabs: TabName[],
+  wantedTabs: TabName[],
   onUpdate: (data: HubData, status: LoadStatus) => void,
 ): Promise<void> {
+  // Parts the school doesn't use are never downloaded: they stay empty, with no "tab not found" warning
+  const tabs = wantedTabs.filter((t) => !hub.unused?.includes(t as OptionalTab));
   // 1. Saved copy first, so the page appears instantly
   const cached = readCache(hubId);
   // The saved copy only counts if it has EVERY tab this page needs

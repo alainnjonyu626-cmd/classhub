@@ -7,6 +7,7 @@ import { L } from "../config/labels";
 import { icon, type IconName } from "../components/icons";
 import { chevron, iconBox, list, row, section } from "../components/ui";
 import { clearCache } from "../lib/cache";
+import { uses } from "../lib/data";
 import { formatDate, formatTime } from "../lib/dates";
 import { el } from "../lib/dom";
 import { hubLink, siteLink, waChat, waShare } from "../lib/links";
@@ -46,10 +47,10 @@ mountPage({
 
     return [
       section(list(
-        menuRow("PDF", "pdf", "Handouts & notes", n(data.handouts.length, "file"), hubLink("handouts")),
-        menuRow("PQ", "exam", L("pastQuestions"), n(data.past_questions.length, "paper"), hubLink("past-questions")),
-        menuRow("book", "", L("courses"), `${data.courses.length} this ${parents ? "year" : "semester"}`, hubLink("courses")),
-        parents ? menuRow("calendar", "ok", parents, "Dates, fees, meetings", hubLink("parents")) : null,
+        uses(hub, "handouts") ? menuRow("PDF", "pdf", "Handouts & notes", n(data.handouts.length, "file"), hubLink("handouts")) : null,
+        uses(hub, "past_questions") ? menuRow("PQ", "exam", L("pastQuestions"), n(data.past_questions.length, "paper"), hubLink("past-questions")) : null,
+        uses(hub, "courses") ? menuRow("book", "", L("courses"), `${data.courses.length} this ${parents ? "year" : "semester"}`, hubLink("courses")) : null,
+        parents && uses(hub, "parents") ? menuRow("calendar", "ok", parents, "Dates, fees, meetings", hubLink("parents")) : null,
         menuRow("people", "ok", L("classInfo"), "Leaders, groups, places", hubLink("class-info")),
       )),
 

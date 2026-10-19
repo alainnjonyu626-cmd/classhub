@@ -308,6 +308,7 @@ const SCHOOLS = {
 | `logo` | no | Small file, under 30 KB |
 | `contact` | no | Used for "Report a mistake" |
 | `active` | yes | Your on/off switch |
+| `unused` | no | Parts this school does not use, e.g. `["past_questions", "parents"]`. Allowed: `courses`, `handouts`, `past_questions`, `leaders`, `places`, `parents`. They are not downloaded, vanish from Home and More, and the sheet does not need those tabs |
 
 The selling page link (your own WhatsApp) lives in `src/config/hubs.ts` too:
 
