@@ -32,6 +32,23 @@
         </div>
       </section>
 
+      <!-- Live example: the real demo pages inside a phone frame (JS adds the frame; links work without JS) -->
+      <section class="mt-10" id="live">
+        <div class="sec-title"><h2>See it live</h2></div>
+        <p class="text-muted">These are real pages with sample data. Tap around inside the phone.</p>
+        <div class="mt-3 flex gap-2 overflow-x-auto pb-0.5 [scrollbar-width:none]" role="group" aria-label="Choose an example">
+          <a class="chip" data-live="app/home.html?hub=demo" href="/app/home.html?hub=demo" aria-pressed="true">University class</a>
+          <a class="chip" data-live="school.html?school=demo-college" href="/school.html?school=demo-college" aria-pressed="false">School page</a>
+          <a class="chip" data-live="app/parents.html?hub=demo-school" href="/app/parents.html?hub=demo-school" aria-pressed="false">Parents' corner</a>
+        </div>
+        <div id="live-phone" class="mt-4" hidden>
+          <div class="mx-auto w-[300px] max-w-full rounded-[34px] border-[6px] border-ink bg-ink p-0 shadow-lg">
+            <iframe id="live-frame" title="Live example of ClassHub" class="block h-[560px] w-full rounded-[28px] bg-bg" loading="lazy"></iframe>
+          </div>
+          <p class="mt-3 text-center"><a id="live-open" class="text-[13px] font-medium text-accent-ink underline" href="/app/home.html?hub=demo" target="_blank" rel="noopener">Open full screen</a></p>
+        </div>
+      </section>
+
       <!-- The problem (illustration, not real people) -->
       <section class="mt-10">
         <div class="sec-title"><h2>Sound familiar?</h2></div>
@@ -58,11 +75,20 @@
 
       <!-- Schools -->
       <section class="mt-8">
-        <div class="sec-title"><h2>For schools</h2></div>
-        <div class="card flex flex-col gap-2">
-          <p class="font-semibold">One link for every class and every parent</p>
-          <p class="text-muted">A school page where students find their class, plus a Parents' corner with resumption dates, fee reminders, meetings and what to buy. Your school's name, colour and logo on every page.</p>
-          <p class="text-[13px] text-muted">No results or individual fee records are ever shown.</p>
+        <div class="sec-title"><h2>For private schools</h2></div>
+        <div class="card flex flex-col gap-4">
+          <div>
+            <p class="font-semibold">One link for the whole school: students and parents</p>
+            <p class="mt-1 text-muted">Your school's name, colour and logo on every page. The school office keeps it up to date from a simple Google Sheet, in a few minutes a week.</p>
+          </div>
+          <ol class="flex flex-col gap-3">
+            <li class="flex gap-3"><span class="grid size-7 shrink-0 place-items-center rounded-full bg-accent-soft text-[13px] font-bold text-accent-ink">1</span><p><b>The school shares one link</b><br /><span class="text-[13px] text-muted">On the school WhatsApp groups, the notice board or the report card.</span></p></li>
+            <li class="flex gap-3"><span class="grid size-7 shrink-0 place-items-center rounded-full bg-accent-soft text-[13px] font-bold text-accent-ink">2</span><p><b>Students find their class</b><br /><span class="text-[13px] text-muted">Form 1 to Upper Sixth, with search. The phone remembers their class for next time.</span></p></li>
+            <li class="flex gap-3"><span class="grid size-7 shrink-0 place-items-center rounded-full bg-accent-soft text-[13px] font-bold text-accent-ink">3</span><p><b>Each class has its own page</b><br /><span class="text-[13px] text-muted">Timetable, sequence tests and exams with countdowns, notes and past papers, class teacher's announcements.</span></p></li>
+            <li class="flex gap-3"><span class="grid size-7 shrink-0 place-items-center rounded-full bg-accent-soft text-[13px] font-bold text-accent-ink">4</span><p><b>Parents get their own corner</b><br /><span class="text-[13px] text-muted">Resumption and holiday dates, fee instalments and deadlines, PTA meetings, what to buy, and a WhatsApp button to the school office.</span></p></li>
+          </ol>
+          <p class="text-[13px] text-muted">Never shown: results, report cards, or what any one family owes. Only information that is fine for anyone with the link to see.</p>
+          <a class="btn btn-light" href="#live" data-live-jump="school.html?school=demo-college">Try the school example</a>
         </div>
       </section>
 
