@@ -22,7 +22,7 @@ const OPTIONS: { value: Filter; label: string }[] = [
 const MATCH: Record<Exclude<Filter, "upcoming" | "done">, (d: Deadline) => boolean> = {
   tests: (d) => d.type === "test" || d.type === "sequence" || d.type === "mock",
   assignments: (d) => d.type === "assignment",
-  exams: (d) => d.type === "exam",
+  exams: (d) => d.type === "exam" || d.type === "practical",
 };
 
 const EMPTY: Record<Filter, string> = {

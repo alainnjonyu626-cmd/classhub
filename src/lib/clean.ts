@@ -133,7 +133,7 @@ export function cleanTimetable(rows: RawRow[]): Cleaned<Slot> {
   return result;
 }
 
-const DEADLINE_TYPES: readonly DeadlineType[] = ["test", "assignment", "exam", "admin", "sequence", "mock"];
+const DEADLINE_TYPES: readonly DeadlineType[] = ["test", "assignment", "exam", "admin", "sequence", "mock", "practical"];
 export function cleanDeadlines(rows: RawRow[]): Cleaned<Deadline> {
   const result = cleanRows(rows, (r) => {
     const title = text(r.title);

@@ -48,7 +48,7 @@ function view(all: PastQuestion[], deadlines: Deadline[], courses: Map<string, C
   const soon = deadlines.find((d) => {
     const t = deadlineTarget(d).getTime();
     return !d.done && d.code !== null && (code === "all" || d.code === code)
-      && ["test", "sequence", "mock", "exam"].includes(d.type) && t > Date.now() && t < Date.now() + 7 * 86400000
+      && ["test", "sequence", "mock", "exam", "practical"].includes(d.type) && t > Date.now() && t < Date.now() + 7 * 86400000
       && all.some((p) => p.code === d.code);
   });
   if (soon && soon.code) {

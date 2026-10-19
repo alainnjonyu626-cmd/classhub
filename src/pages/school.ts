@@ -74,9 +74,9 @@ if (!schoolId || !school) {
   ));
 }
 
-/** "Form 5 Science" → "Form 5", "Lower Sixth Arts" → "Lower Sixth", "Level 200 CS" → "Level 200". */
+/** "Form 5 Science" → "Form 5", "Lower Sixth Commercial" → "Lower Sixth", "HND Year 1 Software" → "HND Year 1", "Level 200 CS" → "Level 200". */
 function levelOf(hub: HubConfig): string {
-  const m = /^(form\s*\d+|level\s*\d+|lower sixth|upper sixth|year\s*\d+|class\s*\d+)/i.exec(hub.subtitle.trim());
+  const m = /^(form\s*\d+|level\s*\d+|lower sixth|upper sixth|hnd\s*(?:year\s*)?\d+|nd\s*(?:year\s*)?\d+|year\s*\d+|class\s*\d+)/i.exec(hub.subtitle.trim());
   return m?.[1] ? m[1].replace(/\s+/g, " ") : "Classes";
 }
 

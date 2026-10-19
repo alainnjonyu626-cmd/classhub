@@ -79,12 +79,13 @@ export function deadlineTypeLabel(type: DeadlineType): string {
     // sequence and mock only exist in secondary mode; a university sheet using them gets the local words
     sequence: getMode() === "secondary" ? "Sequence test" : L("test"),
     mock: getMode() === "secondary" ? "Mock exam" : L("exam"),
+    practical: "Practical exam",
   };
   return labels[type];
 }
 
 export function deadlineIcon(type: DeadlineType): HTMLElement {
-  if (type === "test" || type === "sequence" || type === "mock") return iconBox("test", "exam");
+  if (type === "test" || type === "sequence" || type === "mock" || type === "practical") return iconBox("test", "exam");
   if (type === "exam") return iconBox("calendar", "exam");
   if (type === "admin") return iconBox("people");
   return iconBox("file");

@@ -383,7 +383,7 @@ One Google Sheet per client, copied from your master template. Each **tab** is o
 |---|---|---|---|
 | `title` | text | yes | |
 | `code` | text | no | Course code |
-| `type` | choice | yes | `test`, `assignment`, `exam`, `admin`, `sequence`, `mock` |
+| `type` | choice | yes | `test`, `assignment`, `exam`, `admin`, `sequence`, `mock`, `practical` |
 | `date` | date | yes | |
 | `time` | time | no | Default end of day `23:59` |
 | `venue` | text | no | |
@@ -581,13 +581,28 @@ const LABELS = {
 |---|---|---|
 | Courses menu label | Courses | Subjects |
 | Credits shown | Yes | No |
-| Leader title | Class delegate | Class teacher / School office |
-| Deadline types offered | test, assignment, exam, admin | sequence, assignment, mock, exam, admin |
+| Leader title | Class delegate | Class master / School office |
+| Deadline types offered | test, assignment, exam, practical, admin | sequence, assignment, mock, exam, practical, admin |
 | Parents' corner page | Hidden | Shown, in the More menu and on Home |
 | "Report a mistake" goes to | Delegate | School office |
 | Home quick link 4 | Class info | Parents' corner |
 
 Adding a language later (French) = adding `LABELS.secondary_fr` etc. and a `lang` field in `src/config/hubs.ts`.
+
+---
+
+### Cameroon (English system): how the hubs map
+
+ClassHub is set up for Anglophone schools. The hub `mode` is `university` or `secondary`; the kind of school shows in the hub `subtitle` (the school page groups classes by its first words).
+
+| School | `mode` | Example `subtitle` | Notes |
+|---|---|---|---|
+| University | `university` | `Computer Science · Level 200` | Semesters, CA, exams, resits, credits, class delegate |
+| Institute (HND) | `university` | `HND Year 1 · Software Engineering` | Grouped as "HND Year 1" on the school page |
+| General secondary | `secondary` | `Form 5 Science`, `Lower Sixth Arts` | Sequence tests, mock exams, GCE O and A Level past papers (`gce_practice`) |
+| Technical / commercial secondary | `secondary` | `Form 4 Industrial (Electricity)`, `Lower Sixth Commercial` | Same as general, plus the `practical` deadline type |
+
+In secondary mode the people on Class info are "Class masters & prefects", and parents see the Parents' corner (PTA meetings, fees in FCFA, MoMo instructions typed by the school).
 
 ---
 

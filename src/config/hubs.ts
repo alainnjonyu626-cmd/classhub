@@ -74,6 +74,57 @@ export const HUBS: Record<string, HubConfig> = {
     active: true,
     plan: "year",
   },
+  // Technical and commercial secondary school (Anglophone system), and an HND institute
+  "demo-gtc-f4i": {
+    name: "Form 4 Industrial",
+    subtitle: "Form 4 Industrial (Electricity)",
+    school: "Demo Technical College",
+    schoolId: "demo-technical",
+    mode: "secondary",
+    sheetId: "demo",
+    active: true,
+    plan: "year",
+  },
+  "demo-gtc-f5c": {
+    name: "Form 5 Commercial",
+    subtitle: "Form 5 Commercial",
+    school: "Demo Technical College",
+    schoolId: "demo-technical",
+    mode: "secondary",
+    sheetId: "demo",
+    active: true,
+    plan: "year",
+  },
+  "demo-gtc-ls": {
+    name: "Lower Sixth Comm.",
+    subtitle: "Lower Sixth Commercial",
+    school: "Demo Technical College",
+    schoolId: "demo-technical",
+    mode: "secondary",
+    sheetId: "demo",
+    active: true,
+    plan: "year",
+  },
+  "demo-hnd1": {
+    name: "HND 1 Software",
+    subtitle: "HND Year 1 · Software Engineering",
+    school: "Demo Institute",
+    schoolId: "demo-institute",
+    mode: "university",
+    sheetId: "demo",
+    active: true,
+    plan: "semester",
+  },
+  "demo-hnd2": {
+    name: "HND 2 Software",
+    subtitle: "HND Year 2 · Software Engineering",
+    school: "Demo Institute",
+    schoolId: "demo-institute",
+    mode: "university",
+    sheetId: "demo",
+    active: true,
+    plan: "semester",
+  },
   // Inactive on purpose: must NOT appear on the school page
   "demo-school-us": {
     name: "Upper Sixth Hub",
@@ -90,6 +141,8 @@ export const HUBS: Record<string, HubConfig> = {
 export const SCHOOLS: Record<string, SchoolConfig> = {
   // "nhs": { name: "[SCHOOL NAME]", logo: "logos/nhs.png", color: "#7A1F2B", parentsHub: "nhs-parents" },
   "demo-college": { name: "Demo College", color: "#7A1F2B", parentsHub: "demo-school" },
+  "demo-technical": { name: "Demo Technical College", color: "#1F5A3D", parentsHub: "demo-gtc-f5c" },
+  "demo-institute": { name: "Demo Institute of Technology", color: "#2B59D9" },
 };
 
 /** Hub ids: lowercase letters, numbers and dashes only. */

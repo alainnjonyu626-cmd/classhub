@@ -70,6 +70,7 @@ const TABS: Record<TabName, RawRow[]> = {
     { title: "Project group names", code: "", type: "admin", date: day(4), time: "", venue: "", details: "Groups of 4, send to the delegate.", done: "no", announcement_id: "3" },
     { title: "CA test", code: "MAT201", type: "test", date: day(15), time: "14:00", venue: "Hall B", details: "", done: "no", announcement_id: "" },
     { title: "Assignment 1", code: "STA201", type: "assignment", date: day(18), time: "", venue: "", details: "Exercises 1 to 12, chapter 2.", done: "no", announcement_id: "" },
+    { title: "Practical exam", code: "CSC203", type: "practical", date: day(9), time: "09:00", venue: "Lab 2", details: "Bring your own flash drive.", done: "no", announcement_id: "" },
     { title: "First semester exams begin", code: "", type: "exam", date: day(42), time: "08:00", venue: "", details: "", done: "no", announcement_id: "5" },
     { title: "Assignment 1", code: "CSC203", type: "assignment", date: day(-9), time: "23:59", venue: "", details: "", done: "yes", announcement_id: "" },
   ],
