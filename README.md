@@ -1183,7 +1183,7 @@ Run through this before showing any client.
 
 ### Phase 1: the core (first demo to a real class)
 
-- [ ] **1.1** Upload `tools/classhub-master-template.xlsx` to Google Drive, save it as a Google Sheet, share as "Anyone with the link: Viewer", and run `tools/sheet-tester.html` until every tab is OK. Put the sheet id in `src/config/hubs.ts` (`demo` hub).
+- [x] **1.1** Upload `tools/classhub-master-template.xlsx` to Google Drive, save it as a Google Sheet, share as "Anyone with the link: Viewer", and run `tools/sheet-tester.html` until every tab is OK. Put the sheet id in `src/config/hubs.ts` (`demo` hub).
 - [x] **1.2** Project setup: Vite + TypeScript + Tailwind, `package.json`, `tsconfig.json`, `vite.config.ts`, deploy workflow.
 - [x] **1.3** `src/styles/main.css`: `@theme` tokens + shared component classes (from the mockups).
 - [x] **1.4** `src/types/`: hub and sheet types.
@@ -1193,7 +1193,7 @@ Run through this before showing any client.
 - [x] **1.8** `src/app.ts`: `mountPage()` with hub check, 404/paused redirects, last-hub memory, offline handling.
 - [x] **1.9** Page shells for every page (each shows "Not built yet" until done), 404 and Paused pages.
 - [x] **1.10** Build pages: Home, Announcements, Announcement, Timetable, Deadlines (+ built-in demo data: `sheetId: "demo"` in `hubs.ts` uses `src/lib/demo.ts`, dates always relative to today).
-- [ ] **1.11** Push to GitHub, turn on Pages (Settings › Pages › Source: GitHub Actions), test on your phone.
+- [x] **1.11** Pushed to GitHub and deployed on Netlify (https://classhub-cm.netlify.app) because github.io is unreachable on the owner's network. Phone test still to do (4.5).
 
 ### Phase 2: study materials
 
