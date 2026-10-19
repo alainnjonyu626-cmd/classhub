@@ -14,11 +14,13 @@ const appPages = Object.fromEntries(
     .map((file) => [`app/${file.replace(".html", "")}`, resolve(root, "app", file)]),
 );
 
-/** Adds the manifest and home-screen icon to every page, with the right base path. */
+/** Adds the logo (browser tab icon), manifest and home-screen icon to every page, with the right base path. */
 function pwaTags(base: string): Plugin {
   return {
     name: "classhub-pwa-tags",
     transformIndexHtml: () => [
+      { tag: "link", attrs: { rel: "icon", type: "image/svg+xml", href: `${base}logo.svg` }, injectTo: "head" },
+      { tag: "link", attrs: { rel: "icon", type: "image/png", sizes: "32x32", href: `${base}icons/favicon-32.png` }, injectTo: "head" },
       { tag: "link", attrs: { rel: "manifest", href: `${base}manifest.json` }, injectTo: "head" },
       { tag: "link", attrs: { rel: "apple-touch-icon", href: `${base}icons/apple-touch-icon.png` }, injectTo: "head" },
       { tag: "meta", attrs: { name: "apple-mobile-web-app-capable", content: "yes" }, injectTo: "head" },
