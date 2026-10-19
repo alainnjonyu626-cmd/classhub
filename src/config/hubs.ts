@@ -23,6 +23,16 @@ export const HUBS: Record<string, HubConfig> = {
     active: true,
     plan: "semester",
   },
+  // Real Google Sheet (copy of the master template) used to test the live data path.
+  "test-sheet": {
+    name: "Test Sheet Hub",
+    subtitle: "Real sheet test",
+    school: "ClassHub Test",
+    mode: "university",
+    sheetId: "1lvpLPoN8Pgp0IHyBwVqwniAjc0S3fNAxjBHq-n-NQRY",
+    active: true,
+    plan: "semester",
+  },
   // Secondary-school version of the demo (shows Parents' corner, Subjects, Teacher...)
   "demo-school": {
     name: "Form 5 Hub",
