@@ -18,18 +18,16 @@ document.querySelectorAll<HTMLAnchorElement>("a[data-demo]").forEach((a) => {
   a.href = hubLink("home", {}, "demo");
 });
 
-// Live example: show the real demo pages in a phone frame, switchable with the chips.
-// Without JavaScript the chips are plain links that open each example in a new page.
+// Live examples: show the real demo pages in the hero panel and the big demo
+// panel. Without JavaScript the chips are plain links to the real pages.
 const withBase = (path: string) => BASE + path;
-const phone = document.getElementById("live-phone");
-const frame = document.getElementById("live-frame") as HTMLIFrameElement | null;
+const frames = [...document.querySelectorAll<HTMLIFrameElement>("iframe.live-frame")];
 const openLink = document.getElementById("live-open") as HTMLAnchorElement | null;
 const chips = [...document.querySelectorAll<HTMLAnchorElement>("a[data-live]")];
 
 function showLive(path: string): void {
-  if (!phone || !frame) return;
-  phone.hidden = false;
-  frame.src = withBase(path);
+  if (frames.length === 0) return;
+  for (const frame of frames) frame.src = withBase(path);
   if (openLink) openLink.href = withBase(path);
   chips.forEach((c) => c.setAttribute("aria-pressed", String(c.dataset.live === path)));
 }
@@ -58,3 +56,20 @@ const setText = (selector: string, text: string) =>
   document.querySelectorAll(selector).forEach((node) => { node.textContent = text; });
 setText("[data-owner-name]", OWNER.name);
 setText("[data-owner-city]", OWNER.city);
+
+// Contact form: there is no backend, so "Send" composes a WhatsApp message
+// with the visitor's name, email and message. Nothing is stored anywhere.
+const form = document.getElementById("contact-form") as HTMLFormElement | null;
+form?.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const data = new FormData(form);
+  const name = String(data.get("name") ?? "").trim();
+  const email = String(data.get("email") ?? "").trim();
+  const message = String(data.get("message") ?? "").trim();
+  const error = document.getElementById("cf-error");
+  const incomplete = !name || !email || !message;
+  if (error) error.hidden = !incomplete;
+  if (incomplete || !form.reportValidity()) return;
+  const text = `Hello, I'm ${name} (${email}).\n\n${message}`;
+  window.open(waChat(OWNER.whatsapp, text), "_blank", "noopener");
+});

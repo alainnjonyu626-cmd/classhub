@@ -105,7 +105,7 @@ export function dueBadge(target: Date): HTMLElement {
   const label = countdownLabel(target);
   const [big, small] = splitDue(label);
   return el("div", { class: "shrink-0 text-right", "aria-label": c.past ? "Passed" : `${label} left` },
-    el("b", { class: `block text-xl leading-tight font-bold ${urgent ? "text-urgent" : ""}`, "data-countdown": target.toISOString(), "data-part": "big" }, big),
+    el("b", { class: `tnum block text-xl leading-tight font-bold ${urgent ? "text-urgent" : ""}`, "data-countdown": target.toISOString(), "data-part": "big" }, big),
     el("span", { class: "text-xs text-muted", "data-countdown": target.toISOString(), "data-part": "small" }, small),
   );
 }

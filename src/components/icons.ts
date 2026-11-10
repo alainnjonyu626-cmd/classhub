@@ -19,6 +19,7 @@ const PATHS = {
   book: '<path d="M4 19V5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-2zM8 7h6"/>',
   cap: '<path d="M12 3l9 4-9 4-9-4z"/><path d="M7 9.5V15c3 2 7 2 10 0V9.5"/>',
   offline: '<path d="M2 8.8a15 15 0 0 1 4.2-2.6M22 8.8a15 15 0 0 0-11-3.7M5 12.5a10 10 0 0 1 3.4-2M19 12.5a10 10 0 0 0-4.6-2.4M8.5 16a5 5 0 0 1 7 0M12 20h.01M3 3l18 18"/>',
+  pin: '<path d="M9 4h6l-1 7 3 3H7l3-3z"/><path d="M12 14v7"/>',
 } as const;
 
 export type IconName = keyof typeof PATHS;

@@ -9,11 +9,13 @@
 
   Client colours: src/components/branding.ts overrides --color-accent at runtime.
 */
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Poppins:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
 
 @theme {
   --font-sans: "Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  /* Notice-board print: headings carry the report-card voice, everything else stays quiet */
+  --font-display: "Fraunces", "Poppins", ui-serif, Georgia, serif;
 
   --color-bg: #f6f5f1;
   --color-surface: #ffffff;
@@ -35,6 +37,11 @@
 
   --radius-card: 14px;
   --radius-box: 12px;
+
+  /* Elevation scale — subtle because most surfaces already have borders */
+  --shadow-card: 0 1px 2px rgb(21 23 28 / 0.04);
+  --shadow-lift: 0 6px 16px -6px rgb(21 23 28 / 0.14);
+  --shadow-nav: 0 -4px 16px rgb(21 23 28 / 0.05);
 }
 
 /*
@@ -43,18 +50,22 @@
   (same as the mockups in design/mockups).
 */
 @layer components {
-  .wrap { @apply mx-auto w-full max-w-[560px] px-4; }
+  .wrap { @apply mx-auto w-full max-w-[560px] px-4 sm:px-6; }
 
-  .card { @apply rounded-card border border-line bg-surface p-4; }
+  .card { @apply rounded-card border border-line bg-surface p-4 shadow-card; }
   .card-accent { @apply border-accent bg-accent text-white; }
   .card-urgent { @apply border-[#f1d2c0] bg-urgent-soft; }
 
   .list { @apply overflow-hidden rounded-card border border-line bg-surface; }
-  .row { @apply flex min-h-16 items-center gap-3 border-t border-line px-4 py-3.5 first:border-t-0; }
+  .row { @apply flex min-h-16 items-center gap-3 border-t border-line px-4 py-3.5 transition-colors duration-100 first:border-t-0; }
+  a.row { @apply hover:bg-bg/70 focus-visible:bg-bg/70 active:bg-bg; }
   .row-title { @apply font-medium leading-snug; }
   .row-meta { @apply text-[13px] text-muted; }
 
   .icon-box { @apply grid size-[42px] shrink-0 place-items-center rounded-box bg-accent-soft text-accent-ink; }
+
+  /* Tabular numerals so clocks and countdowns don't jitter as digits change */
+  .tnum { font-variant-numeric: tabular-nums; }
 
   .tag { @apply inline-flex items-center gap-1.5 rounded-full bg-accent-soft px-2.5 py-0.5 text-xs font-semibold text-accent-ink; }
   .tag-urgent { @apply bg-urgent-soft text-urgent; }
@@ -62,27 +73,42 @@
   .tag-ok { @apply bg-ok-soft text-ok; }
   .tag-plain { @apply bg-bg text-muted; }
 
-  .btn { @apply inline-flex min-h-[46px] cursor-pointer items-center justify-center gap-2 rounded-full border-0 bg-ink px-5 font-semibold text-white; }
+  .btn { @apply inline-flex min-h-[46px] cursor-pointer items-center justify-center gap-2 rounded-full border-0 bg-ink px-5 font-semibold text-white transition-[background-color,transform,box-shadow] duration-100 active:scale-[0.98]; }
   .btn-light { @apply border border-line bg-surface text-ink; }
   .btn-wa { @apply bg-wa text-white; }
   .btn-accent { @apply bg-accent text-white; }
   .btn-sm { @apply min-h-9 px-3.5 text-[13px]; }
 
-  .chip { @apply inline-flex min-h-10 shrink-0 items-center rounded-full border border-line bg-surface px-4 text-sm font-medium; }
-  .chip[aria-pressed="true"] { @apply border-ink bg-ink text-white; }
+  .chip { @apply inline-flex min-h-10 shrink-0 cursor-pointer items-center rounded-full border border-line bg-surface px-4 text-sm font-medium transition-colors duration-100 hover:bg-bg; }
+  .chip[aria-pressed="true"] { @apply border-ink bg-ink text-white hover:bg-ink; }
 
   .sec-title { @apply mb-2.5 flex items-baseline justify-between; }
-  .sec-title h2 { @apply text-base font-semibold; }
+  .sec-title h2 { @apply font-display text-[19px] font-semibold leading-tight; }
   .sec-title a { @apply text-[13px] font-medium text-accent-ink; }
 
-  .group-label { @apply mb-2 text-xs font-semibold tracking-[0.06em] text-muted uppercase; }
+  .group-label { @apply mb-2 text-[13px] font-medium text-muted; }
 
   .skeleton { @apply animate-pulse rounded-card bg-line/70; }
 }
 
+/* Row hover/active states need the raw color, defined once outside @apply */
+@layer utilities {
+  .shadow-card { box-shadow: var(--shadow-card); }
+  .shadow-lift { box-shadow: var(--shadow-lift); }
+  .shadow-nav { box-shadow: var(--shadow-nav); }
+}
+
 @layer base {
-  body { @apply bg-bg font-sans text-[15px] leading-normal text-ink antialiased; }
-  :focus-visible { @apply outline-2 outline-offset-2 outline-accent; }
+  body { @apply bg-bg font-sans text-[15px] leading-relaxed text-ink antialiased; }
+  h1, h2 { font-family: var(--font-display); letter-spacing: -0.015em; }
+  /* Optical sizing on Fraunces so big headings get the personality, small ones stay legible */
+  h1, h2 { font-optical-sizing: auto; }
+  h1, h2, h3 { @apply text-balance; }
+  /* Respect notched phones and home-indicator bars for the fixed bottom nav */
+  @supports (padding: env(safe-area-inset-bottom)) {
+    body { padding-bottom: calc(env(safe-area-inset-bottom) + 4.5rem); }
+  }
+  :focus-visible { @apply outline-2 outline-offset-2 outline-accent rounded-[4px]; }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition: none !important; }
   }

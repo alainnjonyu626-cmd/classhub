@@ -3,144 +3,494 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>ClassHub · One link for your whole class</title>
-    <meta name="description" content="Announcements, timetable, deadlines, handouts and past questions for your class, in one link." />
+    <title>ClassHub · Your class. One link. Nothing gets buried.</title>
+    <meta name="description" content="ClassHub helps Cameroonian schools and university classes organize announcements, timetables, deadlines, handouts and past questions — all in one place." />
     <meta name="theme-color" content="#2b59d9" />
     <link rel="stylesheet" href="/src/styles/main.css" />
+    <style>
+      /* Landing-only styles, matching the approved mockup.
+         Mobile keeps a single column; the mockup layout kicks in at 900px. */
+      :root { --brand: var(--color-accent); --navy: #101a33; --navy-2: #16244f; }
+      /* Very narrow phones: drop the tagline + button text so nothing overflows */
+      @media (max-width: 420px) {
+        .brand-tagline { display: none; }
+        .cta-long { display: none; }
+      }
+      .wrap { max-width: 1120px; }
+      @media (max-width: 899px) { .wrap { max-width: 560px; } }
+
+      /* Small blue eyebrow label above section headings, as in the mockup */
+      .eyebrow { font-size: 13px; font-weight: 600; color: var(--brand); }
+      .sec-head { text-align: center; }
+      .sec-head h2 { font-size: clamp(26px, 4vw, 34px); line-height: 1.15; }
+      .sec-head .sub { margin-top: 8px; color: var(--color-muted); }
+
+      /* Soft light-blue backdrop blobs behind sections, as in the mockup */
+      .blob { position: relative; }
+      .blob::before {
+        content: ""; position: absolute; inset: 0; pointer-events: none; z-index: -1;
+        background:
+          radial-gradient(420px 260px at 8% 0%, rgb(43 89 217 / 0.06), transparent 70%),
+          radial-gradient(420px 260px at 96% 100%, rgb(43 89 217 / 0.07), transparent 70%);
+      }
+
+      .faq summary { list-style: none; cursor: pointer; }
+      .faq summary::-webkit-details-marker { display: none; }
+      .faq summary::after { content: "+"; float: right; color: var(--color-muted); font-weight: 600; }
+      .faq details[open] summary::after { content: "–"; }
+
+      /* Hero */
+      .hero-gradient {
+        background:
+          radial-gradient(900px 380px at 88% -12%, rgb(43 89 217 / 0.10), transparent 60%),
+          linear-gradient(#ffffff, #f8faff);
+      }
+      .hero-line-2 { color: var(--brand); }
+      .trust-pill {
+        display: inline-flex; align-items: center; gap: 6px;
+        padding: 7px 12px; border-radius: 999px;
+        background: var(--color-surface); border: 1px solid var(--color-line);
+        font-size: 13px; font-weight: 500;
+      }
+
+      /* Pill nav */
+      .pill-nav a { border-radius: 999px; }
+      .pill-nav a:hover { background: rgb(43 89 217 / 0.08); color: var(--brand); }
+      .pill-nav a.active { background: var(--brand); color: #fff; }
+      .btn-login { display: inline-flex; align-items: center; min-height: 36px; border-radius: 999px; border: 1px solid var(--color-line); background: var(--color-surface); padding: 0 16px; font-size: 13px; font-weight: 600; transition: background-color 0.1s; }
+      .btn-login:hover { background: var(--color-bg); }
+
+      /* Photo strip under the hero */
+      .photo-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+      .photo-card { position: relative; border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-lift); }
+      .photo-card img { display: block; width: 100%; height: 200px; object-fit: cover; }
+      .photo-card figcaption {
+        position: absolute; inset: auto 0 0; padding: 26px 14px 10px;
+        color: #fff; font-size: 13px; font-weight: 600;
+        background: linear-gradient(transparent, rgb(16 26 51 / 0.75));
+      }
+
+      /* Feature tiles */
+      .feat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+      .feat { background: var(--color-surface); border: 1px solid var(--color-line); border-radius: 16px; padding: 20px 18px; }
+      .feat .ico { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 12px; background: var(--color-accent-soft); font-size: 20px; }
+      .feat .t { margin-top: 12px; font-weight: 600; }
+      .feat .d { margin-top: 3px; font-size: 13px; color: var(--color-muted); }
+      .band-dark {
+        background: linear-gradient(120deg, var(--navy), var(--navy-2) 55%, #1d3faf);
+        color: #fff; border-radius: 20px; position: relative; overflow: hidden;
+      }
+      .band-dark .cap { position: absolute; right: -20px; bottom: -30px; font-size: 140px; opacity: 0.12; transform: rotate(-8deg); }
+
+      /* Steps */
+      .step-n { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 999px; background: var(--brand); color: #fff; font-weight: 700; flex-shrink: 0; }
+      .step-arrow { color: var(--color-line); flex-shrink: 0; }
+
+      /* Live demo panels (the REAL product stands in for the mockup's screenshots) */
+      .demo-panel { border-radius: 20px; border: 1px solid var(--color-line); background: var(--color-surface); box-shadow: 0 24px 48px -20px rgb(21 23 28 / 0.25); overflow: hidden; position: relative; }
+      .demo-panel::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 34px; background: linear-gradient(transparent, rgb(246 245 241 / 0.9)); pointer-events: none; }
+      .demo-bar { display: flex; align-items: center; gap: 6px; padding: 10px 14px; border-bottom: 1px solid var(--color-line); background: #fff; }
+      .demo-bar i { width: 9px; height: 9px; border-radius: 999px; background: var(--color-line); }
+
+      /* Before/after comparison cards */
+      .quote-card { background: var(--color-surface); border: 1px solid var(--color-line); border-radius: 16px; padding: 22px 20px; display: flex; flex-direction: column; }
+      .quote-mark { font-family: var(--font-display); font-size: 40px; line-height: 1; color: var(--brand); }
+      .quote-role { margin-top: auto; padding-top: 14px; font-size: 13px; font-weight: 600; color: var(--color-muted); }
+
+      /* Pricing cards */
+      .band-pricing { background: linear-gradient(135deg, #eaf0fd, #f6f8ff); border: 1px solid #dbe4fb; }
+      .price-card { background: linear-gradient(150deg, #2b59d9, #1e43ae); color: #fff; border-radius: 20px; position: relative; overflow: hidden; }
+      .price-card .cap { position: absolute; left: -24px; top: -30px; font-size: 120px; opacity: 0.12; transform: rotate(-10deg); }
+      .check { color: var(--color-ok); font-weight: 700; }
+      .price-card .check { color: #9ff0c0; }
+
+      /* Contact form */
+      .field { width: 100%; border-radius: 12px; border: 1px solid var(--color-line); background: var(--color-surface); padding: 10px 14px; font: inherit; font-size: 14px; outline: none; transition: border-color 0.1s, box-shadow 0.1s; }
+      .field::placeholder { color: rgb(93 98 112 / 0.7); }
+      .field:focus { border-color: var(--color-accent); box-shadow: 0 0 0 3px rgb(43 89 217 / 0.15); }
+      .info-row { display: flex; align-items: center; gap: 12px; }
+      .info-row .ico { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 12px; background: var(--color-accent-soft); flex-shrink: 0; }
+
+      .band-cta { background: linear-gradient(120deg, var(--navy), var(--navy-2) 60%, #1d3faf); color: #fff; border-radius: 20px; position: relative; overflow: hidden; }
+      .band-cta .cap { position: absolute; right: 14px; bottom: -34px; font-size: 110px; opacity: 0.12; }
+
+      /* Dark navy footer */
+      .footer-dark { background: var(--navy); color: rgb(255 255 255 / 0.72); }
+      .footer-dark a:hover { color: #fff; }
+      .footer-dark h3 { color: #fff; font-size: 14px; font-weight: 600; margin-bottom: 10px; }
+
+      @media (min-width: 900px) {
+        .hero { padding-top: 4rem; padding-bottom: 3.5rem; }
+        .hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) 470px; gap: 56px; align-items: center; }
+        .feat-grid { grid-template-columns: repeat(3, 1fr); }
+        .steps { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: start; gap: 10px; }
+        .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: stretch; }
+        .three-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+        .faq-grid { display: grid; grid-template-columns: 1fr 320px; gap: 24px; align-items: start; }
+        .footer-cols { display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr; gap: 32px; text-align: left; }
+        .chips-wrap { flex-wrap: wrap; justify-content: center; }
+      }
+    </style>
   </head>
-  <!-- Selling page. Everything is plain HTML so it works with JavaScript off;
-       landing.ts only fills in the WhatsApp links and your name. README section 16.1 -->
-  <body>
-    <header class="sticky top-0 z-10 border-b border-line bg-bg/95 backdrop-blur">
-      <div class="wrap flex min-h-[58px] items-center justify-between">
-        <span class="flex items-center gap-2 text-lg font-bold">
-          <img src="/logo.svg" alt="" width="28" height="28" class="size-7" />ClassHub
-        </span>
-        <a class="btn btn-wa btn-sm" data-wa="Hello, I'd like a ClassHub for my class" href="#get">Chat with us</a>
+  <!-- Selling page. Plain HTML so it works with JavaScript off;
+       landing.ts fills in WhatsApp links, demo links, the owner name and the contact form. -->
+  <body id="top">
+    <header class="sticky top-0 z-10 border-b border-line bg-white/95 backdrop-blur">
+      <div class="wrap flex min-h-[62px] items-center justify-between gap-3">
+        <a href="#top" class="flex shrink-0 items-center gap-2 whitespace-nowrap" aria-label="ClassHub home">
+          <img src="/logo.svg" alt="" width="30" height="30" class="size-[30px]" />
+          <span class="brand-tagline">
+            <span class="block text-[17px] font-bold leading-tight">ClassHub</span>
+            <span class="block text-[10px] font-medium leading-tight text-muted">Connect · Organize · Succeed</span>
+          </span>
+        </a>
+        <nav aria-label="Primary" class="pill-nav hidden items-center gap-1 whitespace-nowrap text-sm font-medium lg:flex">
+          <a href="#top" class="active px-3 py-1.5">Home</a>
+          <a href="#features" class="px-3 py-1.5">Features</a>
+          <a href="#demo" class="px-3 py-1.5">Demo</a>
+          <a href="#pricing" class="px-3 py-1.5">Pricing</a>
+          <a href="#why" class="px-3 py-1.5">Why ClassHub</a>
+          <a href="#faq" class="px-3 py-1.5">FAQ</a>
+          <a href="#contact" class="px-3 py-1.5">Contact</a>
+        </nav>
+        <div class="flex items-center gap-2">
+          <a class="btn-login hidden sm:inline-flex" data-wa="Hello, how do I open my class hub?" href="#contact">Login</a>
+          <a class="btn btn-accent btn-sm whitespace-nowrap" data-wa="Hello, I'd like to get a ClassHub for my class" href="#pricing"><span class="cta-long">Get Your Class Hub&nbsp;</span>→</a>
+        </div>
       </div>
     </header>
 
-    <main class="wrap pb-12">
-      <!-- Hero -->
-      <section class="pt-10">
-        <span class="tag">For class delegates &amp; schools</span>
-        <h1 class="mt-3 text-[34px] leading-tight font-bold tracking-tight">Your class.<br />One link.<br />Nothing gets buried.</h1>
-        <p class="mt-4 text-muted">Announcements, timetable, deadlines, handouts and past questions for your whole class, in one place every student can open on their phone.</p>
-        <div class="mt-6 flex flex-col gap-2.5">
-          <a class="btn" href="/app/home.html?hub=demo" data-demo>See a live example</a>
-          <a class="btn btn-light" href="#how">How it works</a>
+    <main>
+      <!-- ═══ Hero ═══ -->
+      <section class="hero hero-gradient">
+        <div class="wrap hero-grid">
+          <div>
+            <span class="tag"><span class="flag" aria-hidden="true"></span> Made for Cameroon <span aria-hidden="true">✅</span></span>
+            <h1 class="mt-3 text-[36px] leading-[1.08] font-bold tracking-tight sm:text-[52px]">
+              Your class. One link.<br />
+              <span class="hero-line-2">Nothing gets buried.</span>
+            </h1>
+            <p class="mt-4 max-w-[48ch] text-[16px] leading-relaxed text-muted">ClassHub organizes announcements, timetables, deadlines, handouts and past questions — all in one place, on one link.</p>
+            <div class="mt-6 flex flex-col gap-2.5 sm:flex-row">
+              <a class="btn btn-accent whitespace-nowrap sm:w-auto" data-wa="Hello, I'd like to create a ClassHub for my class" href="#pricing">🚀 Create your Class hub →</a>
+              <a class="btn btn-wa whitespace-nowrap sm:w-auto" data-wa="Hello, I'd like a ClassHub for my class" href="#contact">💬 Chat with us on WhatsApp</a>
+            </div>
+            <div class="mt-6 flex flex-wrap gap-2">
+              <span class="trust-pill"><span aria-hidden="true">⚡</span> Fast</span>
+              <span class="trust-pill"><span aria-hidden="true">🔒</span> Simple &amp; honest</span>
+              <span class="trust-pill"><span aria-hidden="true">📱</span> Accessible on any device</span>
+            </div>
+          </div>
+
+          <!-- The real hub, live. Without JS the chips are plain links. -->
+          <div id="live">
+            <div class="demo-panel">
+              <div class="demo-bar" aria-hidden="true"><i></i><i></i><i></i></div>
+              <iframe id="live-frame" title="Live example of ClassHub" class="live-frame block h-[440px] w-full bg-bg" loading="lazy"></iframe>
+            </div>
+            <p class="mt-1.5 text-center text-[12px] text-muted">Scroll inside the panel — it's the real hub, live.</p>
+          </div>
         </div>
       </section>
 
-      <!-- Live example: the real demo pages inside a phone frame (JS adds the frame; links work without JS) -->
-      <section class="mt-10" id="live">
-        <div class="sec-title"><h2>See it live</h2></div>
-        <p class="text-muted">These are real pages with sample data. Tap around inside the phone.</p>
-        <div class="mt-3 flex gap-2 overflow-x-auto pb-0.5 [scrollbar-width:none]" role="group" aria-label="Choose an example">
+      <!-- Photo strip under the hero: sets the scene (photos are illustrative,
+           not of real clients — credited in the footer) -->
+      <section class="wrap mt-10" aria-label="Scenes from student life">
+        <div class="photo-strip">
+          <figure class="photo-card">
+            <img src="/img/hero-students.jpg" alt="Three students working together with laptops" width="600" height="400" loading="lazy" />
+            <figcaption>Class work, shared</figcaption>
+          </figure>
+          <figure class="photo-card">
+            <img src="/img/teach-class.jpg" alt="A teacher speaking to a full classroom" width="600" height="400" loading="lazy" />
+            <figcaption>Everyone on the same page</figcaption>
+          </figure>
+          <figure class="photo-card">
+            <img src="/img/campus.jpg" alt="Graduates throwing their caps in the air" width="600" height="400" loading="lazy" />
+            <figcaption>From first year to graduation</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- ═══ Features ═══ -->
+      <section class="blob py-14" id="features">
+        <div class="wrap">
+          <div class="sec-head">
+            <p class="eyebrow">Our Features</p>
+            <h2 class="mt-1 font-display">Everything you need<br class="sm:hidden" /> in one place.</h2>
+            <p class="sub mx-auto max-w-[46ch] text-[15px]">ClassHub makes it easy to stay informed and organized.</p>
+          </div>
+          <div class="feat-grid mt-8">
+            <div class="feat"><div class="ico" aria-hidden="true">⚡</div><p class="t">Instant Access</p><p class="d">Get your class hub link within 48 hours.</p></div>
+            <div class="feat"><div class="ico" aria-hidden="true">📱</div><p class="t">Mobile Friendly</p><p class="d">Works across all different devices, phone or laptop.</p></div>
+            <div class="feat"><div class="ico" aria-hidden="true">📶</div><p class="t">Offline Access</p><p class="d">View saved information without internet.</p></div>
+            <div class="feat"><div class="ico" aria-hidden="true">🛡️</div><p class="t">Simple &amp; honest</p><p class="d">No accounts; anyone with the link can view.</p></div>
+            <div class="feat"><div class="ico" aria-hidden="true">👥</div><p class="t">For Everyone</p><p class="d">Students, parents, and administrators.</p></div>
+            <div class="feat"><div class="ico" aria-hidden="true">💙</div><p class="t">Affordable</p><p class="d">5,000 FCFA per class per semester.</p></div>
+          </div>
+          <div class="band-dark mt-6 px-7 py-8 sm:px-10">
+            <span class="cap" aria-hidden="true">🎓</span>
+            <div class="relative flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <p class="max-w-[24ch] text-[22px] font-semibold leading-snug sm:max-w-none">A smarter way to organize your class.</p>
+              <a class="btn btn-light whitespace-nowrap" data-wa="Hello, I'd like to get a ClassHub for my class" href="#pricing">Get Your Class Hub →</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ Demo ═══ -->
+      <section class="wrap py-14" id="demo">
+        <div class="sec-head">
+          <h2 class="font-display">See ClassHub in Action</h2>
+          <p class="sub mx-auto max-w-[46ch] text-[15px]">Explore a real example of a ClassHub dashboard — switch between a university class, a school, a parents' page and more.</p>
+        </div>
+        <div class="demo-panel mx-auto mt-8 max-w-[880px]">
+          <div class="demo-bar" aria-hidden="true"><i></i><i></i><i></i></div>
+          <iframe id="live-frame-2" title="Live example of a ClassHub dashboard" class="live-frame block h-[520px] w-full bg-bg" loading="lazy"></iframe>
+        </div>
+        <div class="chips-wrap mt-4 flex gap-2 overflow-x-auto pb-0.5 [scrollbar-width:none]" role="group" aria-label="Choose an example">
           <a class="chip" data-live="app/home.html?hub=demo" href="/app/home.html?hub=demo" aria-pressed="true">University class</a>
           <a class="chip" data-live="school.html?school=demo-college" href="/school.html?school=demo-college" aria-pressed="false">School page</a>
           <a class="chip" data-live="app/parents.html?hub=demo-school" href="/app/parents.html?hub=demo-school" aria-pressed="false">Parents' corner</a>
           <a class="chip" data-live="school.html?school=demo-technical" href="/school.html?school=demo-technical" aria-pressed="false">Technical school</a>
           <a class="chip" data-live="school.html?school=demo-institute" href="/school.html?school=demo-institute" aria-pressed="false">HND institute</a>
         </div>
-        <div id="live-phone" class="mt-4" hidden>
-          <div class="mx-auto w-[300px] max-w-full rounded-[34px] border-[6px] border-ink bg-ink p-0 shadow-lg">
-            <iframe id="live-frame" title="Live example of ClassHub" class="block h-[560px] w-full rounded-[28px] bg-bg" loading="lazy"></iframe>
-          </div>
-          <p class="mt-3 text-center"><a id="live-open" class="text-[13px] font-medium text-accent-ink underline" href="/app/home.html?hub=demo" target="_blank" rel="noopener">Open full screen</a></p>
-        </div>
+        <noscript><p class="mt-2 text-center text-[13px] text-muted">Use the buttons above to open any example — each is a real ClassHub page.</p></noscript>
+        <p class="mt-5 text-center"><a class="btn btn-accent" data-demo href="/app/home.html?hub=demo">Try the demo hub →</a></p>
       </section>
 
-      <!-- The problem (illustration, not real people) -->
-      <section class="mt-10">
-        <div class="sec-title"><h2>Sound familiar?</h2></div>
-        <div class="card flex flex-col gap-2 border-[#e2dbcd] bg-[#efeae0]" aria-label="Example of a class WhatsApp group">
-          <p class="max-w-[85%] self-start rounded-2xl rounded-bl-sm bg-surface px-3.5 py-2.5">Please when is the CSC 201 CA?</p>
-          <p class="max-w-[85%] self-start rounded-2xl rounded-bl-sm bg-surface px-3.5 py-2.5">Which venue for MAT 201??</p>
-          <p class="max-w-[85%] self-start rounded-2xl rounded-bl-sm bg-surface px-3.5 py-2.5">Who has the chapter 3 handout 🙏🏾</p>
-          <p class="max-w-[85%] self-end rounded-2xl rounded-br-sm bg-[#d9f0cf] px-3.5 py-2.5">I've posted it 5 times already 😩</p>
-        </div>
-        <p class="mt-2 text-xs text-muted">Illustration only.</p>
-      </section>
-
-      <!-- What the class gets -->
-      <section class="mt-8">
-        <div class="sec-title"><h2>What your class gets</h2></div>
-        <div class="list">
-          <div class="row"><svg class="shrink-0 text-ok" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7" /></svg><div class="min-w-0 flex-1"><p class="row-title">Pinned announcements</p><p class="row-meta">Important news stays on top</p></div></div>
-          <div class="row"><svg class="shrink-0 text-ok" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7" /></svg><div class="min-w-0 flex-1"><p class="row-title">Timetable with today first</p><p class="row-meta">Course, venue and teacher</p></div></div>
-          <div class="row"><svg class="shrink-0 text-ok" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7" /></svg><div class="min-w-0 flex-1"><p class="row-title">Deadline countdowns</p><p class="row-meta">Tests and assignments, never missed</p></div></div>
-          <div class="row"><svg class="shrink-0 text-ok" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7" /></svg><div class="min-w-0 flex-1"><p class="row-title">Handouts &amp; past questions</p><p class="row-meta">Sorted by course, easy to find</p></div></div>
-          <div class="row"><svg class="shrink-0 text-ok" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7" /></svg><div class="min-w-0 flex-1"><p class="row-title">Easy updates from your phone</p><p class="row-meta">Edit a simple sheet, the site follows</p></div></div>
-        </div>
-      </section>
-
-      <!-- Cameroon (English system) -->
-      <section class="mt-8" id="cameroon">
-        <div class="sec-title"><h2>Made for Cameroon</h2></div>
-        <div class="list">
-          <div class="row items-start"><div class="min-w-0 flex-1"><p class="row-title">Universities</p><p class="row-meta">Levels 100 to 400, semesters, CA and exams, resits, course codes like CSC 201, and the class delegate.</p></div></div>
-          <div class="row items-start"><div class="min-w-0 flex-1"><p class="row-title">Institutes (HND)</p><p class="row-meta">HND Year 1 and Year 2, semester timetables, practicals and project deadlines.</p></div></div>
-          <div class="row items-start"><div class="min-w-0 flex-1"><p class="row-title">General secondary schools</p><p class="row-meta">Form 1 to Form 5, Lower and Upper Sixth. Sequence tests, mock exams, GCE O and A Level past papers.</p></div></div>
-          <div class="row items-start"><div class="min-w-0 flex-1"><p class="row-title">Technical and commercial schools</p><p class="row-meta">Industrial and commercial departments, practical exams, workshop and typing or accounting practicals.</p></div></div>
-          <div class="row items-start"><div class="min-w-0 flex-1"><p class="row-title">Fees in FCFA</p><p class="row-meta">Fee reminders for parents, with MTN MoMo or Orange Money instructions written by the school.</p></div></div>
-        </div>
-        <p class="mt-2 text-xs text-muted">Built for English-system schools.</p>
-      </section>
-
-      <!-- Schools -->
-      <section class="mt-8">
-        <div class="sec-title"><h2>For private schools</h2></div>
-        <div class="card flex flex-col gap-4">
+      <!-- ═══ How it works + pricing teaser ═══ -->
+      <section class="blob py-14" id="how">
+        <div class="wrap two-col">
           <div>
-            <p class="font-semibold">One link for the whole school: students and parents</p>
-            <p class="mt-1 text-muted">Your school's name, colour and logo on every page. The school office keeps it up to date from a simple Google Sheet, in a few minutes a week.</p>
+            <p class="eyebrow">How It Works</p>
+            <h2 class="mt-1 font-display text-[26px] leading-tight sm:text-[30px]">Get Started in 3 Simple Steps</h2>
+            <ol class="steps mt-6 flex flex-col gap-5">
+              <li class="flex items-start gap-3">
+                <span class="step-n" aria-hidden="true">1</span>
+                <div><p class="font-semibold">Send your class information</p><p class="mt-0.5 text-[13px] text-muted">Share your timetable, announcements, courses and files.</p></div>
+              </li>
+              <li class="step-arrow hidden self-center text-2xl sm:block" aria-hidden="true">→</li>
+              <li class="flex items-start gap-3">
+                <span class="step-n" aria-hidden="true">2</span>
+                <div><p class="font-semibold">Get a link within 48 hours</p><p class="mt-0.5 text-[13px] text-muted">Receive a personalized ClassHub link.</p></div>
+              </li>
+              <li class="step-arrow hidden self-center text-2xl sm:block" aria-hidden="true">→</li>
+              <li class="flex items-start gap-3">
+                <span class="step-n" aria-hidden="true">3</span>
+                <div><p class="font-semibold">Update anytime</p><p class="mt-0.5 text-[13px] text-muted">Add or edit information as things change.</p></div>
+              </li>
+            </ol>
           </div>
-          <ol class="flex flex-col gap-3">
-            <li class="flex gap-3"><span class="grid size-7 shrink-0 place-items-center rounded-full bg-accent-soft text-[13px] font-bold text-accent-ink">1</span><p><b>The school shares one link</b><br /><span class="text-[13px] text-muted">On the school WhatsApp groups, the notice board or the report card.</span></p></li>
-            <li class="flex gap-3"><span class="grid size-7 shrink-0 place-items-center rounded-full bg-accent-soft text-[13px] font-bold text-accent-ink">2</span><p><b>Students find their class</b><br /><span class="text-[13px] text-muted">Form 1 to Upper Sixth, with search. The phone remembers their class for next time.</span></p></li>
-            <li class="flex gap-3"><span class="grid size-7 shrink-0 place-items-center rounded-full bg-accent-soft text-[13px] font-bold text-accent-ink">3</span><p><b>Each class has its own page</b><br /><span class="text-[13px] text-muted">Timetable, sequence tests and exams with countdowns, notes and past papers, class teacher's announcements.</span></p></li>
-            <li class="flex gap-3"><span class="grid size-7 shrink-0 place-items-center rounded-full bg-accent-soft text-[13px] font-bold text-accent-ink">4</span><p><b>Parents get their own corner</b><br /><span class="text-[13px] text-muted">Resumption and holiday dates, fee instalments and deadlines, PTA meetings, what to buy, and a WhatsApp button to the school office.</span></p></li>
-          </ol>
-          <p class="text-[13px] text-muted">Never shown: results, report cards, or what any one family owes. Only information that is fine for anyone with the link to see.</p>
-          <a class="btn btn-light" href="#live" data-live-jump="school.html?school=demo-college">Try the school example</a>
+          <div class="price-card px-7 py-8">
+            <span class="cap" aria-hidden="true">🎓</span>
+            <p class="relative text-[13px] font-semibold text-white/80">Pricing</p>
+            <p class="relative mt-1 text-4xl font-bold">5,000 <span class="text-2xl">FCFA</span></p>
+            <p class="relative text-[13px] text-white/80">per class, per semester</p>
+            <ul class="relative mt-5 flex flex-col gap-2 text-[14px]">
+              <li class="flex items-center gap-2"><span class="check">✔</span> Full access to all features</li>
+              <li class="flex items-center gap-2"><span class="check">✔</span> Updates throughout the semester</li>
+              <li class="flex items-center gap-2"><span class="check">✔</span> Help from us on WhatsApp when you need it</li>
+            </ul>
+            <a class="btn btn-light relative mt-6 w-full sm:w-auto" data-wa="Hello, I'd like to get a ClassHub for my class" href="#contact">Get Started Today →</a>
+          </div>
         </div>
       </section>
 
-      <!-- How it works -->
-      <section class="mt-8" id="how">
-        <div class="sec-title"><h2>How it works</h2></div>
-        <ol class="flex flex-col gap-4">
-          <li class="flex gap-3"><span class="grid size-8 shrink-0 place-items-center rounded-full bg-ink font-bold text-white">1</span><p><b>Send us your class info</b><br /><span class="text-[13px] text-muted">Timetable, courses, delegates.</span></p></li>
-          <li class="flex gap-3"><span class="grid size-8 shrink-0 place-items-center rounded-full bg-ink font-bold text-white">2</span><p><b>Get your link in 48 hours</b><br /><span class="text-[13px] text-muted">Share it in your WhatsApp group.</span></p></li>
-          <li class="flex gap-3"><span class="grid size-8 shrink-0 place-items-center rounded-full bg-ink font-bold text-white">3</span><p><b>Update from your phone</b><br /><span class="text-[13px] text-muted">Change a row in the sheet and everyone sees it.</span></p></li>
-        </ol>
-      </section>
-
-      <!-- Price -->
-      <section class="mt-8" id="get">
-        <div class="card card-accent flex flex-col gap-1.5 px-[18px] py-6 text-center">
-          <p class="text-[13px] opacity-90">For a whole class, per semester</p>
-          <p class="text-3xl font-bold">5,000 FCFA</p>
-          <p class="text-[13px] opacity-90">Schools: message us for a quote</p>
-          <a class="btn mt-3 !bg-white !text-ink" data-wa="Hello, I'd like to get a ClassHub for my class" href="#get">Get your class hub</a>
+      <!-- ═══ Why ClassHub: honest before/after, no invented testimonials ═══ -->
+      <section class="blob py-14" id="why">
+        <div class="wrap">
+          <div class="sec-head">
+            <p class="eyebrow">Why ClassHub</p>
+            <h2 class="mt-1 font-display">From group-chat chaos<br class="sm:hidden" /> to one clear page.</h2>
+            <p class="sub mx-auto max-w-[46ch] text-[15px]">You know the problem. Here is what changes.</p>
+          </div>
+          <div class="three-col mt-8">
+            <figure class="photo-card" style="height:100%;min-height:260px">
+              <img src="/img/study-group.jpg" alt="A study group working together around a table" width="600" height="400" loading="lazy" style="height:100%" />
+              <figcaption>Studying together, not guessing together</figcaption>
+            </figure>
+            <div class="card">
+              <p class="font-semibold">😰 Before: the WhatsApp group</p>
+              <ul class="mt-2 flex flex-col gap-1.5 text-[13px] text-muted">
+                <li>“When is the CA?” asked — and answered — five times</li>
+                <li>Venue changes buried under 40 newer messages</li>
+                <li>Handouts reposted because nobody can find them</li>
+                <li>New students join and have no idea where anything is</li>
+              </ul>
+            </div>
+            <div class="card">
+              <p class="font-semibold">😌 After: the class hub</p>
+              <ul class="mt-2 flex flex-col gap-1.5 text-[13px] text-muted">
+                <li>Pinned announcements stay on top until they expire</li>
+                <li>Deadlines counted down to the hour, orange when close</li>
+                <li>Every handout sorted by course, searchable</li>
+                <li>One link works for the whole class — and parents too</li>
+              </ul>
+            </div>
+            <div class="card">
+              <p class="font-semibold">📋 And for whoever updates it</p>
+              <ul class="mt-2 flex flex-col gap-1.5 text-[13px] text-muted">
+                <li>A simple table, edited from a phone</li>
+                <li>No new app to learn — it's a Google Sheet</li>
+                <li>Mistakes are easy to fix: edit the row, it updates</li>
+                <li>Undo by deleting the change; nothing is lost</li>
+              </ul>
+            </div>
+          </div>
+          <p class="mt-4 text-center text-[12px] text-muted">Want to see for yourself? The demo above is the real product, not a mockup.</p>
         </div>
       </section>
 
-      <!-- FAQ -->
-      <section class="mt-8">
-        <div class="sec-title"><h2>Questions</h2></div>
-        <div class="list">
-          <details class="px-4 py-3.5"><summary class="cursor-pointer font-medium">Do students need to download anything?</summary><p class="mt-2 text-muted">No. They open the link in their phone browser. They can also add it to the home screen, and it opens like an app.</p></details>
-          <details class="border-t border-line px-4 py-3.5"><summary class="cursor-pointer font-medium">Our school only has some sections. Can we still use it?</summary><p class="mt-2 text-muted">Yes. A school can have only general classes, only technical or commercial ones, or even a single class. Each class gets its own page, and anything you don't use, like past papers or the Parents' corner, can be switched off so it never shows.</p></details>
-          <details class="border-t border-line px-4 py-3.5"><summary class="cursor-pointer font-medium">Who can edit?</summary><p class="mt-2 text-muted">Only the delegate or school office (and us). Everyone else just views the page.</p></details>
-          <details class="border-t border-line px-4 py-3.5"><summary class="cursor-pointer font-medium">What if we have no data?</summary><p class="mt-2 text-muted">After the first visit the hub keeps a saved copy, so students can still read the latest info offline.</p></details>
-          <details class="border-t border-line px-4 py-3.5"><summary class="cursor-pointer font-medium">Is it private?</summary><p class="mt-2 text-muted">Anyone with the link can view it, so we never put private information on it, like results or individual fees. Share the link only with your class.</p></details>
+      <!-- ═══ Pricing ═══ -->
+      <section class="wrap py-14" id="pricing">
+        <div class="sec-head">
+          <p class="eyebrow">Pricing</p>
+          <h2 class="mt-1 font-display">Simple. Affordable. Effective.</h2>
+          <p class="sub text-[15px]">Get your class hub for just:</p>
+        </div>
+        <div class="band-pricing mx-auto mt-7 max-w-[720px] rounded-2xl px-6 py-7">
+          <div class="price-card mx-auto max-w-[420px] px-7 py-7 text-center">
+            <span class="cap" aria-hidden="true">🎓</span>
+            <p class="relative text-4xl font-bold">5,000 <span class="text-2xl">FCFA</span></p>
+            <p class="relative mt-1 text-[13px] text-white/80">per class, per semester</p>
+            <ul class="relative mx-auto mt-5 flex max-w-[280px] flex-col gap-2 text-left text-[14px]">
+              <li class="flex items-center gap-2"><span class="check">✔</span> Full access to all features</li>
+              <li class="flex items-center gap-2"><span class="check">✔</span> Updates throughout the semester</li>
+              <li class="flex items-center gap-2"><span class="check">✔</span> Help from us on WhatsApp when you need it</li>
+            </ul>
+            <a class="btn btn-light relative mt-6" data-wa="Hello, I'd like to get a ClassHub for my class" href="#contact">Get Started Today →</a>
+          </div>
+          <p class="mt-4 text-center text-[12px] text-muted">Schools and institutes: message us for a quote.</p>
         </div>
       </section>
 
-      <p class="mt-10 text-center text-xs text-muted">ClassHub by <span data-owner-name>BUDI ALAIN</span> · <span data-owner-city>Douala</span></p>
+      <!-- ═══ FAQ ═══ -->
+      <section class="blob py-14" id="faq">
+        <div class="wrap">
+          <div class="sec-head">
+            <p class="eyebrow">FAQs</p>
+            <h2 class="mt-1 font-display">Frequently Asked Questions</h2>
+            <p class="sub mx-auto max-w-[46ch] text-[15px]">Find answers to common questions about ClassHub.</p>
+          </div>
+          <div class="faq-grid mt-8">
+            <div class="faq list">
+              <details class="px-4 py-3.5"><summary class="pr-6 font-medium">What is ClassHub?</summary><p class="mt-2 text-muted">A single web page for your class: announcements, timetable, deadlines, handouts and past questions, all in one link.</p></details>
+              <details class="border-t border-line px-4 py-3.5"><summary class="pr-6 font-medium">Is it free?</summary><p class="mt-2 text-muted">Setting up a hub costs 5,000 FCFA per class, per semester. Viewing the hub is always free for students and parents.</p></details>
+              <details class="border-t border-line px-4 py-3.5"><summary class="pr-6 font-medium">Can I use ClassHub for my school?</summary><p class="mt-2 text-muted">Yes. A school can have only general classes, only technical or commercial ones, or even a single class. Anything you don't use, like past papers or the Parents' corner, can be switched off.</p></details>
+              <details class="border-t border-line px-4 py-3.5"><summary class="pr-6 font-medium">How do I get my class link?</summary><p class="mt-2 text-muted">Send us your class information on WhatsApp. Within 48 hours you receive a personalized ClassHub link to share in your class group.</p></details>
+              <details class="border-t border-line px-4 py-3.5"><summary class="pr-6 font-medium">Is ClassHub secure?</summary><p class="mt-2 text-muted">Anyone with the link can view it, so we never put private information on it, like results or individual fees. Share the link only with your class.</p></details>
+              <details class="border-t border-line px-4 py-3.5"><summary class="pr-6 font-medium">Where can I get help?</summary><p class="mt-2 text-muted">Message us on WhatsApp — you can reach us for anything about your hub, any time.</p></details>
+            </div>
+            <aside class="card text-center">
+              <div class="icon-box mx-auto text-[22px]" aria-hidden="true">💬</div>
+              <p class="mt-3 font-display text-[18px] font-semibold">Still have questions?</p>
+              <p class="mt-1 text-[13px] text-muted">Chat with us on WhatsApp for quick assistance.</p>
+              <a class="btn btn-wa mt-4 w-full" data-wa="Hello, I have a question about ClassHub" href="#contact">Chat on WhatsApp</a>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══ Contact ═══ -->
+      <section class="wrap py-14" id="contact">
+        <div class="sec-head">
+          <p class="eyebrow">Contact Us</p>
+          <h2 class="mt-1 font-display">We're here to help.</h2>
+          <p class="sub mx-auto max-w-[46ch] text-[15px]">Reach out to us — questions or need support?</p>
+        </div>
+        <div class="two-col mt-8">
+          <div class="flex flex-col justify-center gap-5">
+            <div class="info-row">
+              <span class="ico" aria-hidden="true">💬</span>
+              <div><p class="text-[13px] font-medium text-muted">WhatsApp</p><a class="font-semibold" data-wa="Hello, I'd like a ClassHub for my class" href="#contact">Chat with us</a></div>
+            </div>
+            <div class="info-row">
+              <span class="ico" aria-hidden="true">📍</span>
+              <div><p class="text-[13px] font-medium text-muted">Location</p><p class="font-semibold"><span data-owner-city>Douala</span>, Cameroon</p></div>
+            </div>
+            <div class="info-row">
+              <span class="ico" aria-hidden="true">🕒</span>
+              <div><p class="text-[13px] font-medium text-muted">Response time</p><p class="font-semibold">Usually within a few hours</p></div>
+            </div>
+          </div>
+          <form id="contact-form" class="card flex flex-col gap-3" novalidate>
+            <div>
+              <label class="mb-1 block text-[13px] font-medium" for="cf-name">Your Name</label>
+              <input id="cf-name" name="name" class="field" type="text" autocomplete="name" required />
+            </div>
+            <div>
+              <label class="mb-1 block text-[13px] font-medium" for="cf-email">Your Email</label>
+              <input id="cf-email" name="email" class="field" type="email" autocomplete="email" required />
+            </div>
+            <div>
+              <label class="mb-1 block text-[13px] font-medium" for="cf-msg">Your Message</label>
+              <textarea id="cf-msg" name="message" class="field min-h-[110px]" required></textarea>
+            </div>
+            <p id="cf-error" class="hidden text-[13px] font-medium text-urgent" role="alert">Please fill in every field before sending.</p>
+            <button class="btn btn-accent" type="submit">Send Message →</button>
+            <p class="text-[12px] text-muted">Sending opens WhatsApp with your message ready — nothing is stored on this site.</p>
+          </form>
+        </div>
+      </section>
+
+      <!-- ═══ Community band ═══ -->
+      <section class="wrap pb-14" id="community">
+        <div class="band-cta px-7 py-8">
+          <span class="cap" aria-hidden="true">👥</span>
+          <div class="relative flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p class="text-xl font-bold">Join the ClassHub Community Today</p>
+              <p class="mt-1 text-[14px] text-white/80">Be part of a smarter, more connected education experience in Cameroon.</p>
+            </div>
+            <a class="btn btn-wa whitespace-nowrap" data-wa="Hello, I'd like a ClassHub for my class" href="#community">💬 Chat on WhatsApp</a>
+          </div>
+        </div>
+      </section>
     </main>
+
+    <!-- ═══ Dark navy footer ═══ -->
+    <footer class="footer-dark">
+      <div class="wrap grid gap-8 py-10 text-[14px] sm:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1fr]">
+        <div>
+          <a href="#top" class="flex items-center gap-2 text-[16px] font-bold text-white">
+            <img src="/logo.svg" alt="" width="24" height="24" class="size-6" />ClassHub
+          </a>
+          <p class="mt-3 max-w-[30ch] text-[13px]">One link for your whole class. Organize. Share. Stay informed.</p>
+        </div>
+        <nav aria-label="Quick links">
+          <h3>Quick Links</h3>
+          <ul class="flex flex-col gap-1.5">
+            <li><a href="#top">Home</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+          </ul>
+        </nav>
+        <nav aria-label="Support">
+          <h3>Support</h3>
+          <ul class="flex flex-col gap-1.5">
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#demo">Demo</a></li>
+          </ul>
+        </nav>
+        <div>
+          <h3>Follow Us</h3>
+          <a class="inline-flex size-10 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-white/20" data-wa="Hello, I'd like a ClassHub for my class" href="#community" aria-label="ClassHub on WhatsApp">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5 13.9c-.2.6-1.2 1.1-1.7 1.2-.4 0-1 .1-1.6-.1a13 13 0 0 1-5.8-5.1c-.6-1-.9-2-.8-2.9 0-.6.4-1.3.8-1.6.2-.2.4-.2.6-.2h.5c.2 0 .4 0 .5.4l.8 1.9c.1.2 0 .4-.1.5l-.4.5c-.2.2-.3.3-.1.6a8 8 0 0 0 3.6 3.1c.3.1.4 0 .6-.1l.8-1c.2-.2.4-.2.6-.1l1.9.9c.3.1.4.3.4.4 0 .2 0 .9-.2 1.2Z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="border-t border-white/10">
+        <div class="wrap flex flex-col items-center gap-1.5 py-5 text-center text-[12.5px] sm:flex-row sm:justify-between sm:text-left">
+          <p>Made with <span class="text-urgent">♥</span> in Cameroon · Photos: <a class="underline" href="https://unsplash.com" target="_blank" rel="noopener">Unsplash</a></p>
+          <p>© <span id="year">2025</span> ClassHub by <span data-owner-name>BUDI ALAIN</span>. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
     <script type="module" src="/src/pages/landing.ts"></script>
   </body>
 </html>

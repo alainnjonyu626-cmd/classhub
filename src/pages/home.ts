@@ -8,6 +8,7 @@ import {
 } from "../components/ui";
 import { atTime, countdown, dayCode, formatDate, formatLongDate, formatTime, isoWeek, minutesNow, relativeDay, relativeTime, today } from "../lib/dates";
 import { el } from "../lib/dom";
+import { icon } from "../components/icons";
 import { uses } from "../lib/data";
 import { hubLink, prettyCode } from "../lib/links";
 import type { HubConfig } from "../types/hub";
@@ -42,7 +43,10 @@ function pinnedCard(data: HubData): HTMLElement | null {
   const posted = atTime(pinned.date, pinned.time ?? 0);
   return section(
     el("a", { href: hubLink("announcement", { id: String(pinned.id) }), class: `card ${CATEGORY_CARD[pinned.category]} flex flex-col gap-2` },
-      el("span", {}, categoryTag(pinned.category, "Pinned · ")),
+      el("span", { class: "flex items-center gap-1.5" },
+        categoryTag(pinned.category),
+        el("span", { class: "tag tag-plain", title: "Pinned to the top" }, icon("pin", 13), "Pinned"),
+      ),
       el("h2", { class: "text-[17px] leading-snug font-semibold" }, pinned.title),
       el("p", { class: "text-[13px] text-muted" }, `${pinned.author ?? L("manager")} · ${relativeTime(posted)}`),
     ),
@@ -65,7 +69,7 @@ function nextDeadline(deadlines: Deadline[], courses: Map<string, Course>): HTML
     .filter(Boolean).join(" · ");
   const box = (value: string, unit: "days" | "hours" | "mins") =>
     el("div", { class: "flex-1 rounded-[10px] bg-white/15 py-2 text-center" },
-      el("b", { class: "block text-[22px] leading-tight font-bold", "data-countdown": iso, "data-part": unit }, value),
+      el("b", { class: "tnum block text-[22px] leading-tight font-bold", "data-countdown": iso, "data-part": unit }, value),
       el("span", { class: "text-[11px] opacity-85" }, unit),
     );
   return section(
@@ -109,7 +113,7 @@ function todaySection(timetable: Slot[], courses: Map<string, Course>): HTMLElem
 // 5. Quick links with live counts
 function quickLinks(data: HubData, hub: HubConfig): HTMLElement {
   const tile = (title: string, sub: string, href: string) =>
-    el("a", { href, class: "card flex min-h-[92px] flex-col justify-between p-3.5" },
+    el("a", { href, class: `card flex min-h-[92px] flex-col justify-between p-3.5 transition-[box-shadow,border-color] duration-100 hover:border-[#d6d2c8] hover:shadow-lift` },
       el("b", { class: "font-semibold" }, title), el("span", { class: "text-xs text-muted" }, sub));
   const plural = (n: number, word: string) => `${n} ${word}${n === 1 ? "" : "s"}`;
   const parents = L("parents");
